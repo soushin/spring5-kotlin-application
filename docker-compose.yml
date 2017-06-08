@@ -7,18 +7,16 @@ services:
     ports:
       - 8080:8080
       - 50051:50051
+    depends_on:
+      - backend
 
   backend:
     container_name: backend_server
-    build: ./api
+    build: ./backend
     ports:
       - 50052:50052
-
-  grpc_gateway:
-    container_name: grpc_gateway
-    build: ./gateway
-    ports:
-      - 8081:8080
+    depends_on:
+      - mysql
 
   mysql:
     container_name: mysql

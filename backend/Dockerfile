@@ -15,6 +15,6 @@ RUN apt-get update && \
     cp -R /api-server/build/libs/* /usr/local/api-server/lib/ && \
     rm -rf /api-server
 
-ENTRYPOINT java $JAVA_OPTS -jar /usr/local/api-server/lib/api.backend.jar
+ENTRYPOINT java $JAVA_OPTS -jar /usr/local/api-server/lib/app.backend.jar
 
 EXPOSE 50052 50052

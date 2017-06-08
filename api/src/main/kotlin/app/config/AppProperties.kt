@@ -21,7 +21,7 @@ class AppProperties {
         var backend = Backend()
         class Backend {
             var port = 50052
-            var host = "localhost"
+            var host = "backend"
         }
     }
 }

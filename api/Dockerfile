@@ -15,7 +15,7 @@ RUN apt-get update && \
     cp -R /api-server/build/libs/* /usr/local/api-server/lib/ && \
     rm -rf /api-server
 
-ENTRYPOINT java $JAVA_OPTS -jar /usr/local/api-server/lib/api.app.jar
+ENTRYPOINT java $JAVA_OPTS -jar /usr/local/api-server/lib/app.api.jar
 
 EXPOSE 8080 8080
 EXPOSE 50051 50051
