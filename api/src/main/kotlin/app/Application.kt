@@ -18,7 +18,6 @@ class Application {
         @JvmStatic
         fun main(args: Array<String>) {
             run(Application::class, *args)
-//            SpringApplicationBuilder(Application::class.java).web(WebApplicationType.NONE).run(*args)
         }
     }
 }
