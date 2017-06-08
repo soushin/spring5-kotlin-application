@@ -1,0 +1,33 @@
+version: "3"
+
+services:
+  api:
+    container_name: api_server
+    build: ./api
+    ports:
+      - 8080:8080
+      - 50051:50051
+
+  backend:
+    container_name: backend_server
+    build: ./api
+    ports:
+      - 50052:50052
+
+  grpc_gateway:
+    container_name: grpc_gateway
+    build: ./gateway
+    ports:
+      - 8081:8080
+
+  mysql:
+    container_name: mysql
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    volumes:
+      - ./mysql/init:/docker-entrypoint-initdb.d
+      - ./mysql/etc/mysql/conf.d/custom.cnf:/etc/mysql/conf.d/custom.cnf
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
