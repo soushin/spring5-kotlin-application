@@ -10,7 +10,7 @@ RUN apt-get update && \
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     \
     cd /api-server && ./gradlew clean && \
-    cd /api-server && rm -rf ~/.gradle && ./gradlew clean build -x test && \
+    cd /api-server && rm -rf ~/.gradle && ./gradlew clean generateProto build -x test && \
     mkdir -p /usr/local/api-server/lib && \
     cp -R /api-server/build/libs/* /usr/local/api-server/lib/ && \
     rm -rf /api-server

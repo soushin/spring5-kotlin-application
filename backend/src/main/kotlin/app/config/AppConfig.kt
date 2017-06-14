@@ -1,11 +1,13 @@
 package app.config
 
-import app.entity.Models
-import io.requery.sql.KotlinConfiguration
-import io.requery.sql.KotlinEntityDataStore
 import org.apache.commons.dbcp.BasicDataSource
+import org.seasar.doma.jdbc.NoCacheSqlFileRepository
+import org.seasar.doma.jdbc.SqlFileRepository
+import org.seasar.doma.jdbc.dialect.Dialect
+import org.seasar.doma.jdbc.dialect.MysqlDialect
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
 import javax.sql.DataSource
 
 /**
@@ -15,7 +17,6 @@ import javax.sql.DataSource
 @Configuration
 class AppConfig {
 
-    @Bean
     fun realDataSource(): DataSource {
         val dataSource = BasicDataSource()
         dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
@@ -26,12 +27,11 @@ class AppConfig {
     }
 
     @Bean
-    fun data(): KotlinEntityDataStore<Any> {
-        val configuration = KotlinConfiguration(
-                dataSource = realDataSource(),
-                model = Models.KT,
-                statementCacheSize = 0,
-                useDefaultLogging = true)
-        return KotlinEntityDataStore(configuration)
-    }
+    open fun dataSource(): DataSource = TransactionAwareDataSourceProxy(realDataSource())
+
+    @Bean
+    open fun dialect(): Dialect = MysqlDialect()
+
+    @Bean
+    open fun sqlFileRepository(): SqlFileRepository = NoCacheSqlFileRepository()
 }

@@ -23,7 +23,7 @@ class EchoBackendClient(private val appProperties: AppProperties) {
             return Result.Failure(GrpcException.BadRequestException("bad request."))
 
         return ShutdownLoan.using(getChannel(), { channel ->
-            val stub = EchoServiceGrpc.newBlockingStub(getChannel())
+            val stub = EchoServiceGrpc.newBlockingStub(channel)
             val msg = EchoMessage.newBuilder().setMessage(req.get()).build()
             Result.Success(stub.echoService(msg).message)
         })

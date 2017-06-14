@@ -1,30 +1,21 @@
 package app.entity
 
-import io.requery.*
+import org.seasar.doma.*
 import java.time.LocalDateTime
 
-/**
- *
- * @author nsoushi
- */
-@Entity(model = "kt")
+@Entity(immutable = true)
 @Table(name = "task")
-interface Task {
-
-    @get:Key
-    @get:Generated
-    @get:Column(name = "task_id")
-    var id: Long
-
-    @get:Column(name = "title")
-    var title: String
-
-    @get:Column(name = "finished_at")
-    var finishedAt: LocalDateTime?
-
-    @get:Column(name = "created_at")
-    var createdAt: LocalDateTime
-
-    @get:Column(name = "updated_at")
-    var updatedAt: LocalDateTime
-}
+data class Task(
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        @Column(name = "task_id")
+        val id: Int? = null,
+        @Column(name = "title")
+        val title: String,
+        @Column(name = "finished_at")
+        val finishedAt: LocalDateTime?,
+        @Column(name = "created_at")
+        val createdAt: LocalDateTime,
+        @Column(name = "updated_at")
+        val updatedAt: LocalDateTime
+)
