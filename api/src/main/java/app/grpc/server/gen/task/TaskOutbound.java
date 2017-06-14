@@ -17,6 +17,9 @@ public  final class TaskOutbound extends
   private TaskOutbound() {
     taskId_ = 0;
     title_ = "";
+    finishedAt_ = "";
+    createdAt_ = "";
+    updatedAt_ = "";
   }
 
   @java.lang.Override
@@ -53,6 +56,24 @@ public  final class TaskOutbound extends
             java.lang.String s = input.readStringRequireUtf8();
 
             title_ = s;
+            break;
+          }
+          case 26: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            finishedAt_ = s;
+            break;
+          }
+          case 34: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            createdAt_ = s;
+            break;
+          }
+          case 42: {
+            java.lang.String s = input.readStringRequireUtf8();
+
+            updatedAt_ = s;
             break;
           }
         }
@@ -121,6 +142,108 @@ public  final class TaskOutbound extends
     }
   }
 
+  public static final int FINISHEDAT_FIELD_NUMBER = 3;
+  private volatile java.lang.Object finishedAt_;
+  /**
+   * <code>string finishedAt = 3;</code>
+   */
+  public java.lang.String getFinishedAt() {
+    java.lang.Object ref = finishedAt_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      finishedAt_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string finishedAt = 3;</code>
+   */
+  public com.google.protobuf.ByteString
+      getFinishedAtBytes() {
+    java.lang.Object ref = finishedAt_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      finishedAt_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int CREATEDAT_FIELD_NUMBER = 4;
+  private volatile java.lang.Object createdAt_;
+  /**
+   * <code>string createdAt = 4;</code>
+   */
+  public java.lang.String getCreatedAt() {
+    java.lang.Object ref = createdAt_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      createdAt_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string createdAt = 4;</code>
+   */
+  public com.google.protobuf.ByteString
+      getCreatedAtBytes() {
+    java.lang.Object ref = createdAt_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      createdAt_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int UPDATEDAT_FIELD_NUMBER = 5;
+  private volatile java.lang.Object updatedAt_;
+  /**
+   * <code>string updatedAt = 5;</code>
+   */
+  public java.lang.String getUpdatedAt() {
+    java.lang.Object ref = updatedAt_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      updatedAt_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string updatedAt = 5;</code>
+   */
+  public com.google.protobuf.ByteString
+      getUpdatedAtBytes() {
+    java.lang.Object ref = updatedAt_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      updatedAt_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
   private byte memoizedIsInitialized = -1;
   public final boolean isInitialized() {
     byte isInitialized = memoizedIsInitialized;
@@ -139,6 +262,15 @@ public  final class TaskOutbound extends
     if (!getTitleBytes().isEmpty()) {
       com.google.protobuf.GeneratedMessageV3.writeString(output, 2, title_);
     }
+    if (!getFinishedAtBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 3, finishedAt_);
+    }
+    if (!getCreatedAtBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 4, createdAt_);
+    }
+    if (!getUpdatedAtBytes().isEmpty()) {
+      com.google.protobuf.GeneratedMessageV3.writeString(output, 5, updatedAt_);
+    }
   }
 
   public int getSerializedSize() {
@@ -152,6 +284,15 @@ public  final class TaskOutbound extends
     }
     if (!getTitleBytes().isEmpty()) {
       size += com.google.protobuf.GeneratedMessageV3.computeStringSize(2, title_);
+    }
+    if (!getFinishedAtBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, finishedAt_);
+    }
+    if (!getCreatedAtBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, createdAt_);
+    }
+    if (!getUpdatedAtBytes().isEmpty()) {
+      size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, updatedAt_);
     }
     memoizedSize = size;
     return size;
@@ -173,6 +314,12 @@ public  final class TaskOutbound extends
         == other.getTaskId());
     result = result && getTitle()
         .equals(other.getTitle());
+    result = result && getFinishedAt()
+        .equals(other.getFinishedAt());
+    result = result && getCreatedAt()
+        .equals(other.getCreatedAt());
+    result = result && getUpdatedAt()
+        .equals(other.getUpdatedAt());
     return result;
   }
 
@@ -187,6 +334,12 @@ public  final class TaskOutbound extends
     hash = (53 * hash) + getTaskId();
     hash = (37 * hash) + TITLE_FIELD_NUMBER;
     hash = (53 * hash) + getTitle().hashCode();
+    hash = (37 * hash) + FINISHEDAT_FIELD_NUMBER;
+    hash = (53 * hash) + getFinishedAt().hashCode();
+    hash = (37 * hash) + CREATEDAT_FIELD_NUMBER;
+    hash = (53 * hash) + getCreatedAt().hashCode();
+    hash = (37 * hash) + UPDATEDAT_FIELD_NUMBER;
+    hash = (53 * hash) + getUpdatedAt().hashCode();
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -309,6 +462,12 @@ public  final class TaskOutbound extends
 
       title_ = "";
 
+      finishedAt_ = "";
+
+      createdAt_ = "";
+
+      updatedAt_ = "";
+
       return this;
     }
 
@@ -333,6 +492,9 @@ public  final class TaskOutbound extends
       app.grpc.server.gen.task.TaskOutbound result = new app.grpc.server.gen.task.TaskOutbound(this);
       result.taskId_ = taskId_;
       result.title_ = title_;
+      result.finishedAt_ = finishedAt_;
+      result.createdAt_ = createdAt_;
+      result.updatedAt_ = updatedAt_;
       onBuilt();
       return result;
     }
@@ -379,6 +541,18 @@ public  final class TaskOutbound extends
       }
       if (!other.getTitle().isEmpty()) {
         title_ = other.title_;
+        onChanged();
+      }
+      if (!other.getFinishedAt().isEmpty()) {
+        finishedAt_ = other.finishedAt_;
+        onChanged();
+      }
+      if (!other.getCreatedAt().isEmpty()) {
+        createdAt_ = other.createdAt_;
+        onChanged();
+      }
+      if (!other.getUpdatedAt().isEmpty()) {
+        updatedAt_ = other.updatedAt_;
         onChanged();
       }
       onChanged();
@@ -498,6 +672,213 @@ public  final class TaskOutbound extends
   checkByteStringIsUtf8(value);
       
       title_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object finishedAt_ = "";
+    /**
+     * <code>string finishedAt = 3;</code>
+     */
+    public java.lang.String getFinishedAt() {
+      java.lang.Object ref = finishedAt_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        finishedAt_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string finishedAt = 3;</code>
+     */
+    public com.google.protobuf.ByteString
+        getFinishedAtBytes() {
+      java.lang.Object ref = finishedAt_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        finishedAt_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string finishedAt = 3;</code>
+     */
+    public Builder setFinishedAt(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      finishedAt_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string finishedAt = 3;</code>
+     */
+    public Builder clearFinishedAt() {
+      
+      finishedAt_ = getDefaultInstance().getFinishedAt();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string finishedAt = 3;</code>
+     */
+    public Builder setFinishedAtBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      finishedAt_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object createdAt_ = "";
+    /**
+     * <code>string createdAt = 4;</code>
+     */
+    public java.lang.String getCreatedAt() {
+      java.lang.Object ref = createdAt_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        createdAt_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string createdAt = 4;</code>
+     */
+    public com.google.protobuf.ByteString
+        getCreatedAtBytes() {
+      java.lang.Object ref = createdAt_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        createdAt_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string createdAt = 4;</code>
+     */
+    public Builder setCreatedAt(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      createdAt_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string createdAt = 4;</code>
+     */
+    public Builder clearCreatedAt() {
+      
+      createdAt_ = getDefaultInstance().getCreatedAt();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string createdAt = 4;</code>
+     */
+    public Builder setCreatedAtBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      createdAt_ = value;
+      onChanged();
+      return this;
+    }
+
+    private java.lang.Object updatedAt_ = "";
+    /**
+     * <code>string updatedAt = 5;</code>
+     */
+    public java.lang.String getUpdatedAt() {
+      java.lang.Object ref = updatedAt_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        updatedAt_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string updatedAt = 5;</code>
+     */
+    public com.google.protobuf.ByteString
+        getUpdatedAtBytes() {
+      java.lang.Object ref = updatedAt_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        updatedAt_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string updatedAt = 5;</code>
+     */
+    public Builder setUpdatedAt(
+        java.lang.String value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  
+      updatedAt_ = value;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string updatedAt = 5;</code>
+     */
+    public Builder clearUpdatedAt() {
+      
+      updatedAt_ = getDefaultInstance().getUpdatedAt();
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string updatedAt = 5;</code>
+     */
+    public Builder setUpdatedAtBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) {
+    throw new NullPointerException();
+  }
+  checkByteStringIsUtf8(value);
+      
+      updatedAt_ = value;
       onChanged();
       return this;
     }

@@ -85,9 +85,10 @@ dependencies {
 
     // functions
     compile "com.github.kittinunf.result:result:1.1.0"
+    compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.8.4"
 
     // log
-    compile 'io.github.microutils:kotlin-logging:1.4.4'
+    compile "io.github.microutils:kotlin-logging:1.4.4"
 }
 
 sourceSets {

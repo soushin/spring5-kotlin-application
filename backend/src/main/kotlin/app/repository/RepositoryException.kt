@@ -1,8 +1,7 @@
 package app.repository
 
-import app.ConflictException
-import app.NotFoundException
 import app.SystemException
+import app.WebAppException
 
 /**
  *
@@ -10,7 +9,7 @@ import app.SystemException
  */
 sealed class RepositoryException : SystemException {
 
-    constructor(message: String) : super(message)
+    constructor(message: String) : super(message, null)
 
     class NotFoundException : RepositoryException {
         constructor(message: String) : super(message)
@@ -23,8 +22,8 @@ sealed class RepositoryException : SystemException {
     companion object {
         fun handle(error: RepositoryException): SystemException {
             return when (error) {
-                is RepositoryException.NotFoundException -> NotFoundException(error.message!!)
-                is RepositoryException.ConflictException -> ConflictException(error.message!!)
+                is RepositoryException.NotFoundException -> WebAppException.NotFoundException(error.message!!)
+                is RepositoryException.ConflictException -> WebAppException.ConflictException(error.message!!)
             }
         }
     }

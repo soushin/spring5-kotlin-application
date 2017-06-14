@@ -15,7 +15,7 @@ gwtask "github.com/nsoushi/spring5-kotlin-application/gateway/protobuf/task"
 )
 
 var (
-	echoEndpoint = flag.String("echo_endpoint", "localhost:50051", "endpoint of YourService")
+	echoEndpoint = flag.String("echo_endpoint", "localhost:50052", "endpoint of YourService")
 )
 
 func run() error {

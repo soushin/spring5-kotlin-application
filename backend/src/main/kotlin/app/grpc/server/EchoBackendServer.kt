@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service
 class EchoBackendServer() : EchoServiceGrpc.EchoServiceImplBase() {
 
     override fun echoService(request: EchoMessage?, responseObserver: StreamObserver<EchoMessage>?) {
-
         val msg = EchoMessage.newBuilder().setMessage("(backend) echo \\${request?.message}/").build()
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()

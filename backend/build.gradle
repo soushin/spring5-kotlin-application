@@ -5,6 +5,7 @@ buildscript {
     ext.springboot_version = "2.0.0.M1"
     ext.grpc_version = "1.3.0"
     ext.grpc_version_snapshot = "1.4.0-SNAPSHOT"
+    ext.doma_version = "2.16.1"
 
     repositories {
         mavenCentral()
@@ -46,6 +47,16 @@ repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 }
 
+processResources.destinationDir = compileJava.destinationDir
+compileJava.dependsOn processResources
+
+kapt {
+    generateStubs = false
+    arguments {
+        arg("doma.resources.dir", processResources.destinationDir)
+    }
+}
+
 compileKotlin {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
@@ -77,11 +88,15 @@ dependencies {
     compile "org.lognet:grpc-spring-boot-starter:2.0.3"
 
     // db
-    compile 'io.requery:requery:1.3.2'
-    compile 'io.requery:requery-kotlin:1.3.2'
-    kapt 'io.requery:requery-processor:1.3.2'
+//    compile 'io.requery:requery:1.3.2'
+//    compile 'io.requery:requery-kotlin:1.3.2'
+//    kapt 'io.requery:requery-processor:1.3.2'
     compile "commons-dbcp:commons-dbcp:1.4"
     runtime "mysql:mysql-connector-java:6.0.5"
+
+    compile "org.seasar.doma.boot:doma-spring-boot-autoconfigure:1.1.0"
+    compile "org.seasar.doma:doma:$doma_version"
+    kapt "org.seasar.doma:doma:$doma_version"
 
     // grpc
     compile "io.grpc:grpc-netty:${grpc_version_snapshot}"
@@ -147,4 +162,4 @@ task cleanProtoGen{
         delete("$projectDir/src/main/java/app/server")
     }
 }
-
+clean.dependsOn cleanProtoGen

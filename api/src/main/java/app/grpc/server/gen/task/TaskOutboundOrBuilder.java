@@ -21,4 +21,34 @@ public interface TaskOutboundOrBuilder extends
    */
   com.google.protobuf.ByteString
       getTitleBytes();
+
+  /**
+   * <code>string finishedAt = 3;</code>
+   */
+  java.lang.String getFinishedAt();
+  /**
+   * <code>string finishedAt = 3;</code>
+   */
+  com.google.protobuf.ByteString
+      getFinishedAtBytes();
+
+  /**
+   * <code>string createdAt = 4;</code>
+   */
+  java.lang.String getCreatedAt();
+  /**
+   * <code>string createdAt = 4;</code>
+   */
+  com.google.protobuf.ByteString
+      getCreatedAtBytes();
+
+  /**
+   * <code>string updatedAt = 5;</code>
+   */
+  java.lang.String getUpdatedAt();
+  /**
+   * <code>string updatedAt = 5;</code>
+   */
+  com.google.protobuf.ByteString
+      getUpdatedAtBytes();
 }
