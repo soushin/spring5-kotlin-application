@@ -36,6 +36,9 @@ apply plugin: 'com.google.protobuf'
 
 mainClassName = "app.Application"
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
 repositories {
     mavenCentral()
     jcenter()
@@ -51,6 +54,15 @@ compileKotlin {
     targetCompatibility = JavaVersion.VERSION_1_8
 
     kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+compileTestKotlin {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+
+    kotlinOptions{
         jvmTarget = "1.8"
     }
 }
@@ -89,6 +101,10 @@ dependencies {
 
     // log
     compile "io.github.microutils:kotlin-logging:1.4.4"
+
+    // test
+    testCompile "org.springframework.boot:spring-boot-starter-test:$springboot_version"
+    testCompile "io.kotlintest:kotlintest:2.0.1"
 }
 
 sourceSets {

@@ -5,6 +5,7 @@ import app.grpc.server.gen.task.TaskOutbound
 import app.json
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.ServerResponse.*
 import reactor.core.publisher.Flux
@@ -24,7 +25,7 @@ class TaskHandler(private val taskBackendClient: TaskBackendClient) {
 
     fun create(req: ServerRequest) = ok().json().body(
             req.bodyToFlux(CreateTaskInbound::class.java).doOnNext {
-               p -> TaskModel(taskBackendClient.createTask(p.title))
+                p -> TaskModel(taskBackendClient.createTask(p.title))
             })
 
     fun updateByTaskId(req: ServerRequest) = ok().json().body(
