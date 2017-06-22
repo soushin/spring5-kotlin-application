@@ -131,6 +131,9 @@ idea {
         sourceDirs += file("${buildDir}/generated/source/kapt/main/")
         sourceDirs += file("src/main/grpc/")
         generatedSourceDirs += "${buildDir}/generated/source/kapt/main/"
+
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
     }
 }
 

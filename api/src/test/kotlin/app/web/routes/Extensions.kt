@@ -13,3 +13,4 @@ import kotlin.reflect.KClass
 
 fun <T : Any> mock(type: KClass<T>) = Mockito.mock(type.java)
 
+fun <T : Any> ObjectMapper.readValue(content: String, type: KClass<T>) = this.readValue(content, type.java)

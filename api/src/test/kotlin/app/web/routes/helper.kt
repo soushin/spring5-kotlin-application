@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
  *
  * @author nsoushi
  */
-class km {
+class KotlinModule {
     companion object {
         fun <T> any(): T {
             return Mockito.any()
