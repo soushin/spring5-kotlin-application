@@ -28,7 +28,7 @@ class EchoServer(private val echoBackendClient: EchoBackendClient) : EchoService
             responseObserver?.onNext(msg)
             responseObserver?.onCompleted()
         }, {
-            error ->
+            _ ->
             logger.error { "gRPC backend error, echo error." }
             responseObserver?.onError(
                     Status.INVALID_ARGUMENT.withDescription("echo error.").asRuntimeException())
