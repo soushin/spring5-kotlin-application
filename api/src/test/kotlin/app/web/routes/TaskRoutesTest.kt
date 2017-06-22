@@ -85,7 +85,7 @@ class TaskRoutesTest {
                 .exchange().expectStatus().isOk
                 .expectBody()
                 .consumeAsStringWith {
-                    val actual = mapper.readValue<List<TaskModel>>(it, (object : TypeReference<List<TaskModel>>() {}))
+                    val actual: List<TaskModel> = mapper.readValueTypeReference(it)
                     actual.size shouldBe 1
                     actual.get(0).id shouldBe 1L
                     actual.get(0).title shouldBe "task title"
