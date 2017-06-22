@@ -6,6 +6,10 @@ import app.json
 import app.web.handler.CreateTaskInbound
 import app.web.handler.TaskHandler
 import app.web.handler.TaskModel
+import app.web.routes.KotlinModule.Companion.any
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.kotlintest.matchers.shouldBe
 import org.junit.Before
 import org.junit.Test
@@ -29,6 +33,8 @@ class TaskRoutesTest {
     lateinit var taskHandler: TaskHandler
     lateinit var exceptionFilter: ExceptionFilter
     lateinit var taskBackendClient: TaskBackendClient
+
+    val mapper = ObjectMapper().registerModule(KotlinModule())
 
     @Before
     fun before() {
@@ -55,98 +61,97 @@ class TaskRoutesTest {
     fun `GET Task`() {
 
         // mock
-        `when`(taskHandler.fetchByTaskId(km.any())).thenReturn(ok().json().body(Mono.just(mockModel)))
+        `when`(taskHandler.fetchByTaskId(any())).thenReturn(ok().json().body(Mono.just(mockModel)))
 
-        val result = client.get().uri("/api/task/1")
+        client.get().uri("/api/task/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange().expectStatus().isOk
-                .expectBody(TaskModel::class.java)
-                .returnResult()
-
-        val response = result.responseBody
-        response.id shouldBe 1L
-        response.title shouldBe "task title"
-        response.createdAt shouldBe "2017-06-13T16:22:52Z"
-        response.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                .expectBody()
+                .consumeAsStringWith {
+                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    actual.id shouldBe 1L
+                    actual.title shouldBe "task title"
+                    actual.createdAt shouldBe "2017-06-13T16:22:52Z"
+                    actual.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                }
     }
 
     @Test
     fun `GET Tasks`() {
 
         // mock
-        `when`(taskHandler.fetchAll(km.any())).thenReturn(ok().json().body(Flux.fromIterable(listOf(mockModel))))
+        `when`(taskHandler.fetchAll(any())).thenReturn(ok().json().body(Flux.fromIterable(listOf(mockModel))))
 
-        val result = client.get().uri("/api/tasks")
+        client.get().uri("/api/tasks")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange().expectStatus().isOk
-                .expectBodyList(TaskModel::class.java)
-                .returnResult()
-
-        val response = result.responseBody
-
-        val task = response.get(0)
-        task.id shouldBe 1L
-        task.title shouldBe "task title"
-        task.createdAt shouldBe "2017-06-13T16:22:52Z"
-        task.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                .expectBody()
+                .consumeAsStringWith {
+                    val actual = mapper.readValue<List<TaskModel>>(it, (object : TypeReference<List<TaskModel>>() {}))
+                    actual.size shouldBe 1
+                    actual.get(0).id shouldBe 1L
+                    actual.get(0).title shouldBe "task title"
+                    actual.get(0).createdAt shouldBe "2017-06-13T16:22:52Z"
+                    actual.get(0).updatedAt shouldBe "2017-06-13T16:22:52Z"
+                }
     }
 
     @Test
     fun `CREATE Task`() {
 
         // mock
-        `when`(taskHandler.create(km.any())).thenReturn(ok().json().body(Mono.just(mockModel)))
+        `when`(taskHandler.create(any())).thenReturn(ok().json().body(Mono.just(mockModel)))
 
-        val result = client.post().uri("/api/task")
+        client.post().uri("/api/task")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .syncBody(CreateTaskInbound(title = "title"))
                 .exchange().expectStatus().isOk
-                .expectBody(TaskModel::class.java)
-                .returnResult()
-
-        val response = result.responseBody
-        response.id shouldBe 1L
-        response.title shouldBe "task title"
-        response.createdAt shouldBe "2017-06-13T16:22:52Z"
-        response.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                .expectBody()
+                .consumeAsStringWith {
+                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    actual.id shouldBe 1L
+                    actual.title shouldBe "task title"
+                    actual.createdAt shouldBe "2017-06-13T16:22:52Z"
+                    actual.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                }
     }
 
     @Test
     fun `UPDATE Task`() {
 
         // mock
-        `when`(taskHandler.updateByTaskId(km.any())).thenReturn(ok().json().body(Mono.just(mockModel)))
+        `when`(taskHandler.updateByTaskId(any())).thenReturn(ok().json().body(Mono.just(mockModel)))
 
-        val result = client.put().uri("/api/task/1")
+        client.put().uri("/api/task/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .syncBody(CreateTaskInbound(title = "title"))
                 .exchange().expectStatus().isOk
-                .expectBody(TaskModel::class.java)
-                .returnResult()
-
-        val response = result.responseBody
-        response.id shouldBe 1L
-        response.title shouldBe "task title"
-        response.createdAt shouldBe "2017-06-13T16:22:52Z"
-        response.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                .expectBody()
+                .consumeAsStringWith {
+                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    actual.id shouldBe 1L
+                    actual.title shouldBe "task title"
+                    actual.createdAt shouldBe "2017-06-13T16:22:52Z"
+                    actual.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                }
     }
 
     @Test
     fun `DELETE Task`() {
 
         // mock
-        `when`(taskHandler.deleteByTaskId(km.any())).thenReturn(ok().json().body(Mono.just(mockModel)))
+        `when`(taskHandler.deleteByTaskId(any())).thenReturn(ok().json().body(Mono.just(mockModel)))
 
-        val result = client.delete().uri("/api/task/1")
+        client.delete().uri("/api/task/1")
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange().expectStatus().isOk
-                .expectBody(TaskModel::class.java)
-                .returnResult()
-
-        val response = result.responseBody
-        response.id shouldBe 1L
-        response.title shouldBe "task title"
-        response.createdAt shouldBe "2017-06-13T16:22:52Z"
-        response.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                .expectBody()
+                .consumeAsStringWith {
+                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    actual.id shouldBe 1L
+                    actual.title shouldBe "task title"
+                    actual.createdAt shouldBe "2017-06-13T16:22:52Z"
+                    actual.updatedAt shouldBe "2017-06-13T16:22:52Z"
+                }
     }
 }
