@@ -32,14 +32,12 @@ class TaskRoutesTest {
     lateinit var client : WebTestClient
     lateinit var taskHandler: TaskHandler
     lateinit var exceptionFilter: ExceptionFilter
-    lateinit var taskBackendClient: TaskBackendClient
 
     val mapper = ObjectMapper().registerModule(KotlinModule())
 
     @Before
     fun before() {
 
-        taskBackendClient = mock(TaskBackendClient::class)
         taskHandler = mock(TaskHandler::class)
         exceptionFilter = ExceptionFilter()
 
@@ -68,7 +66,7 @@ class TaskRoutesTest {
                 .exchange().expectStatus().isOk
                 .expectBody()
                 .consumeAsStringWith {
-                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    val actual: TaskModel = mapper.readValue(it)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
@@ -108,7 +106,7 @@ class TaskRoutesTest {
                 .exchange().expectStatus().isOk
                 .expectBody()
                 .consumeAsStringWith {
-                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    val actual: TaskModel = mapper.readValue(it)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
@@ -128,7 +126,7 @@ class TaskRoutesTest {
                 .exchange().expectStatus().isOk
                 .expectBody()
                 .consumeAsStringWith {
-                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    val actual: TaskModel = mapper.readValue(it)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
@@ -147,7 +145,7 @@ class TaskRoutesTest {
                 .exchange().expectStatus().isOk
                 .expectBody()
                 .consumeAsStringWith {
-                    val actual = mapper.readValue<TaskModel>(it, TaskModel::class)
+                    val actual: TaskModel = mapper.readValue(it)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"

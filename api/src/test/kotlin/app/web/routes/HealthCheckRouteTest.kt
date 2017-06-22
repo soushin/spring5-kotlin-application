@@ -50,7 +50,7 @@ class HealthCheckRouteTest {
                 .expectStatus().isOk
                 .expectBody()
                 .consumeAsStringWith {
-                    val actual = mapper.readValue<Response<*>>(it, Response::class)
+                    val actual: Response<*> = mapper.readValue(it)
                     actual.data shouldBe true
                 }
     }
