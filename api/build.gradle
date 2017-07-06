@@ -167,9 +167,14 @@ task protoDep {
     if (findProperty("identityFile") != null) {
         identity_file = findProperty("identityFile")
     }
+    def forceUpdate = ""
+    if (findProperty("forceUpdate") != null || findProperty("forceUpdate") == true) {
+        forceUpdate = "-f"
+    }
+    println forceUpdate
     doLast() {
         exec {
-            commandLine = ["protodep", "--identity-file=${identity_file}", "up"]
+            commandLine = ["protodep", forceUpdate, "--identity-file=${identity_file}", "up"]
         }
     }
 }
