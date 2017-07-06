@@ -19,7 +19,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.3.0)",
-    comments = "Source: github.com/nsoushi/spring5-kotlin-application/task.proto")
+    comments = "Source: github.com/nsoushi/spring5-kotlin-application-proto/task.proto")
 public final class TaskServiceGrpc {
 
   private TaskServiceGrpc() {}
