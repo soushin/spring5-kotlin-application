@@ -20,3 +20,4 @@ service EchoService {
 message EchoMessage {
   string message = 1;
 }
+
