@@ -1,0 +1,6 @@
+proto_outdir = "./src/main/proto"
+
+[[dependencies]]
+  target = "github.com/nsoushi/spring5-kotlin-application/backend/src/main/proto/"
+  revision = "84dc030aec55cf8abb18b2522f225ee88ded9a73"
+  branch = "master"

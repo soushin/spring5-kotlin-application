@@ -160,4 +160,22 @@ task cleanProtoGen{
         delete("$projectDir/src/main/java/app/server")
     }
 }
+clean.dependsOn cleanProtoGen
 
+task protoDep {
+    def identity_file = "id_rsa"
+    if (findProperty("identityFile") != null) {
+        identity_file = findProperty("identityFile")
+    }
+    doLast() {
+        exec {
+            commandLine = ["protodep", "--identity-file=${identity_file}", "up"]
+        }
+    }
+}
+
+tasks.whenTaskAdded { task ->
+    if (task.name == "generateProto" && !project.hasProperty("IGNORE_PROTO_DEP")) {
+        task.dependsOn protoDep
+    }
+}
