@@ -171,7 +171,6 @@ task protoDep {
     if (findProperty("forceUpdate") != null || findProperty("forceUpdate") == true) {
         forceUpdate = "-f"
     }
-    println forceUpdate
     doLast() {
         exec {
             commandLine = ["protodep", forceUpdate, "--identity-file=${identity_file}", "up"]

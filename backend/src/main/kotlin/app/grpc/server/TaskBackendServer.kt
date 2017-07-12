@@ -4,24 +4,23 @@ import app.WebAppException
 import app.entity.Task
 import app.grpc.server.gen.task.*
 import app.service.*
-import app.util.DateUtil.Format.FULL_UTC
-import app.util.DateUtil.to
+import app.util.DateConverter.Format.FULL_UTC
+import app.util.DateConverter.to
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import mu.KotlinLogging
-import org.springframework.stereotype.Service
 
 /**
  *
  * @author nsoushi
  */
-@Service
-class TaskBackendServer(private val getTaskService: GetTaskServiceImpl,
-                        private val getTaskListService: GetTaskListServiceImpl,
-                        private val createTaskService: CreateTaskServiceImpl,
-                        private val updateTaskService: UpdateTaskServiceImpl,
-                        private val deleteTaskService: DeleteTaskServiceImpl,
-                        private val finishTaskService: FinishTaskServiceImpl) : TaskServiceGrpc.TaskServiceImplBase() {
+@GRpcService
+class TaskBackendServer(private val getTaskService: GetTaskService,
+                        private val getTaskListService: GetTaskListService,
+                        private val createTaskService: CreateTaskService,
+                        private val updateTaskService: UpdateTaskService,
+                        private val deleteTaskService: DeleteTaskService,
+                        private val finishTaskService: FinishTaskService) : TaskServiceGrpc.TaskServiceImplBase() {
 
     private val logger = KotlinLogging.logger {}
 
@@ -53,7 +52,7 @@ class TaskBackendServer(private val getTaskService: GetTaskServiceImpl,
 
     override fun getTaskListService(request: TaskListInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         try {
-            getTaskListService(GetTaskListCommand(request?.page!!)).forEach {
+            getTaskListService(GetTaskListCommand(request?.page!!))().forEach {
                 val msg = getOutbound(it)
                 responseObserver?.onNext(msg)
             }

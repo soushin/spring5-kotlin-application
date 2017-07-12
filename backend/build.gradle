@@ -107,6 +107,9 @@ dependencies {
 
     // log
     compile 'io.github.microutils:kotlin-logging:1.4.4'
+
+    // metrics
+    compile "io.dropwizard.metrics:metrics-core:3.2.3"
 }
 
 sourceSets {

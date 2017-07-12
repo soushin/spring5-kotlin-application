@@ -8,7 +8,7 @@ import java.time.temporal.ChronoUnit
  *
  * @author nsoushi
  */
-object DateUtil {
+object DateConverter {
 
     enum class Format(val format: String) {
         FULL("yyyy-MM-dd HH:mm:ss"),
@@ -20,7 +20,7 @@ object DateUtil {
         return date.truncatedTo(ChronoUnit.DAYS)
     }
 
-    infix fun LocalDateTime.to(f: DateUtil.Format) : String = DateTimeFormatter.ofPattern(f.format).format(this)
+    infix fun LocalDateTime.to(f: DateConverter.Format) : String = DateTimeFormatter.ofPattern(f.format).format(this)
 
-    infix fun String.`is`(f: DateUtil.Format) : LocalDateTime = LocalDateTime.parse(this, DateTimeFormatter.ofPattern(f.format))
+    infix fun String.`is`(f: DateConverter.Format) : LocalDateTime = LocalDateTime.parse(this, DateTimeFormatter.ofPattern(f.format))
 }

@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional
 
 data class CreateTaskCommand(val title: String)
 
+typealias CreateTaskService = ApplicationService<CreateTaskCommand, Task>
+
 @Service("createTaskService")
-class CreateTaskServiceImpl(private val taskRepository: TaskRepository) : ApplicationService<CreateTaskCommand, Task> {
+class CreateTaskServiceImpl(private val taskRepository: TaskRepository) : CreateTaskService {
 
     @Transactional
     override fun invoke(command: CreateTaskCommand): Task {

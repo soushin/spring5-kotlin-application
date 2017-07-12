@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional
 
 data class UpdateTaskCommand(val id: Long, val title: String)
 
+typealias UpdateTaskService = ApplicationService<UpdateTaskCommand, Task>
+
 @Service("updateTaskService")
-class UpdateTaskServiceImpl(private val taskRepository: TaskRepository) : ApplicationService<UpdateTaskCommand, Task> {
+class UpdateTaskServiceImpl(private val taskRepository: TaskRepository) : UpdateTaskService {
 
     @Transactional
     override fun invoke(command: UpdateTaskCommand): Task {
