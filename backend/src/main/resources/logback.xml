@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>
+                [%-5level][%d{yyyy-MM-dd HH:mm:ss.SSS}] %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/app.%d{yyyy-MM-dd}.log.tar.gz</fileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>
+                [%-5level][%d{yyyy-MM-dd HH:mm:ss.SSS}] %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+    <appender name="GRPC_METRICS_LOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/grpc_metrics.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/grpc_metrics.%d{yyyy-MM-dd}.log.tar.gz</fileNamePattern>
+        </rollingPolicy>
+        <encoder>
+            <Pattern>
+                [%d{yyyy-MM-dd HH:mm:ss.SSS}] %msg%n
+            </Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE" />
+        <appender-ref ref="FILE" />
+    </root>
+
+    <logger name="GRPC_METRICS" level="INFO" additivity="false">
+        <appender-ref ref="GRPC_METRICS_LOG"/>
+    </logger>
+
+</configuration>

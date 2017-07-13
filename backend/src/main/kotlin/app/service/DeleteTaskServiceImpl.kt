@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional
 
 data class DeleteTaskCommand(val id: Long)
 
+typealias DeleteTaskService = ApplicationService<DeleteTaskCommand, Task>
+
 @Service("deleteTaskService")
-class DeleteTaskServiceImpl(private val taskRepository: TaskRepository) : ApplicationService<DeleteTaskCommand, Task> {
+class DeleteTaskServiceImpl(private val taskRepository: TaskRepository) : DeleteTaskService {
 
     @Transactional
     override fun invoke(command: DeleteTaskCommand): Task {

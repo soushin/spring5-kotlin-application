@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional
 
 data class GetTaskCommand(val id: Long)
 
+typealias GetTaskService = ApplicationService<GetTaskCommand, Task>
+
 @Service("getTaskService")
-class GetTaskServiceImpl(private val taskRepository: TaskRepository) : ApplicationService<GetTaskCommand, Task> {
+class GetTaskServiceImpl(private val taskRepository: TaskRepository) : GetTaskService {
 
     @Transactional(readOnly = true)
     override fun invoke(command: GetTaskCommand): Task {

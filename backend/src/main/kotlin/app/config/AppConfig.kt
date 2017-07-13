@@ -1,13 +1,17 @@
 package app.config
 
+import com.codahale.metrics.MetricRegistry
+import com.codahale.metrics.Slf4jReporter
 import org.apache.commons.dbcp.BasicDataSource
 import org.seasar.doma.jdbc.NoCacheSqlFileRepository
 import org.seasar.doma.jdbc.SqlFileRepository
 import org.seasar.doma.jdbc.dialect.Dialect
 import org.seasar.doma.jdbc.dialect.MysqlDialect
+import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy
+import java.util.concurrent.TimeUnit
 import javax.sql.DataSource
 
 /**
@@ -34,4 +38,18 @@ class AppConfig {
 
     @Bean
     open fun sqlFileRepository(): SqlFileRepository = NoCacheSqlFileRepository()
+
+    @Bean
+    fun metricRegistry(): MetricRegistry = MetricRegistry()
+
+    @Bean
+    fun reporter(): Slf4jReporter {
+        val reporter = Slf4jReporter.forRegistry(metricRegistry())
+                .outputTo(LoggerFactory.getLogger("GRPC_METRICS"))
+                .convertRatesTo(TimeUnit.SECONDS)
+                .convertDurationsTo(TimeUnit.MILLISECONDS)
+                .build()
+        reporter.start(10, TimeUnit.MINUTES)
+        return reporter
+    }
 }

@@ -2,7 +2,7 @@ FROM java:openjdk-8
 
 COPY . /api-server
 
-ENV ORG_GRADLE_PROJECT_IGNORE_PROTO_DP=true
+ENV ORG_GRADLE_PROJECT_IGNORE_PROTO_DEP=true
 
 RUN apt-get update && \
     apt-get upgrade -y && \

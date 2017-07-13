@@ -3,7 +3,7 @@ package app.service
 import app.entity.Task
 import app.repository.RepositoryException.Companion.handle
 import app.repository.TaskRepository
-import com.github.kittinunf.result.Validation
+import app.util.ListModel
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,13 +14,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class GetTaskListCommand(val page: Int)
 
+typealias GetTaskListService = ApplicationService<GetTaskListCommand, ListModel<Task>>
+
 @Service("getTaskListService")
-class GetTaskListServiceImpl(private val taskRepository: TaskRepository) : ApplicationService<GetTaskListCommand, List<Task>> {
+class GetTaskListServiceImpl(private val taskRepository: TaskRepository) : GetTaskListService {
 
     @Transactional(readOnly = true)
-    override fun invoke(command: GetTaskListCommand): List<Task> {
+    override fun invoke(command: GetTaskListCommand): ListModel<Task> {
         return taskRepository.findMany().fold({
-            taskList -> taskList
+            taskList -> ListModel(taskList)
         }, {
             error -> throw handle(error)
         })

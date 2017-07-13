@@ -14,8 +14,10 @@ import org.springframework.transaction.annotation.Transactional
 
 data class FinishTaskCommand(val id: Long)
 
+typealias FinishTaskService = ApplicationService<FinishTaskCommand, Task>
+
 @Service("finishTaskService")
-class FinishTaskServiceImpl(private val taskRepository: TaskRepository) : ApplicationService<FinishTaskCommand, Task> {
+class FinishTaskServiceImpl(private val taskRepository: TaskRepository) : FinishTaskService {
 
     @Transactional
     override fun invoke(command: FinishTaskCommand): Task {
