@@ -7,13 +7,12 @@ import app.grpc.server.gen.task.TaskOutbound
 import app.grpc.server.gen.task.TaskServiceGrpc
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
-import org.springframework.stereotype.Service
 
 /**
  *
  * @author nsoushi
  */
-@Service
+@GRpcService
 class TaskServer(private val taskBackendClient: TaskBackendClient) : TaskServiceGrpc.TaskServiceImplBase() {
 
     override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
