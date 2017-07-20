@@ -6,14 +6,13 @@ import app.grpc.server.gen.echo.EchoServiceGrpc
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import mu.KotlinLogging
-import org.springframework.stereotype.Service
 import java.util.*
 
 /**
  *
  * @author nsoushi
  */
-@Service
+@GRpcService
 class EchoServer(private val echoBackendClient: EchoBackendClient) : EchoServiceGrpc.EchoServiceImplBase() {
 
     private val logger = KotlinLogging.logger {}
