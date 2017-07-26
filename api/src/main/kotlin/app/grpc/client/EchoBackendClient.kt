@@ -7,7 +7,6 @@ import app.grpc.server.gen.echo.EchoServiceGrpc
 import com.github.kittinunf.result.Result
 import io.grpc.netty.NettyChannelBuilder
 import org.springframework.stereotype.Component
-import valencia.currency.gateway.grpc.client.ShutdownLoan
 import java.util.*
 
 /**

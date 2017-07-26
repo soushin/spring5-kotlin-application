@@ -10,7 +10,6 @@ import io.grpc.netty.NettyChannelBuilder
 import kotlinx.coroutines.experimental.*
 import mu.KotlinLogging
 import org.springframework.stereotype.Component
-import valencia.currency.gateway.grpc.client.ShutdownLoan
 
 /**
  *
