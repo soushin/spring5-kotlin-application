@@ -3,6 +3,7 @@ package app.web.handler
 import app.grpc.client.TaskBackendClient
 import app.grpc.server.gen.task.TaskOutbound
 import app.json
+import kotlinx.coroutines.experimental.runBlocking
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
@@ -19,18 +20,25 @@ import reactor.core.publisher.Mono
 class TaskHandler(private val taskBackendClient: TaskBackendClient) {
 
     fun fetchByTaskId(req: ServerRequest) = ok().json().body(
-            Mono.just(TaskModel(taskBackendClient.getTask(req.pathVariable("id").toLong()))))
+            runBlocking {
+                Mono.just(TaskModel(taskBackendClient.getTask(req.pathVariable("id").toLong())))
+            })
 
-    fun fetchAll(req: ServerRequest) = ok().json().body(Flux.fromIterable(taskBackendClient.getTaskList().map(::TaskModel)))
+    fun fetchAll(req: ServerRequest) = ok().json().body(Flux.fromIterable(
+            runBlocking {
+                taskBackendClient.getTaskList().map(::TaskModel)
+            }))
 
     fun create(req: ServerRequest) = ok().json().body(
             req.bodyToFlux(CreateTaskInbound::class.java).doOnNext {
-                p -> TaskModel(taskBackendClient.createTask(p.title))
+                p ->
+                TaskModel(taskBackendClient.createTask(p.title))
             })
 
     fun updateByTaskId(req: ServerRequest) = ok().json().body(
             req.bodyToFlux(CreateTaskInbound::class.java).doOnNext {
-                p -> TaskModel(taskBackendClient.updateTask(req.pathVariable("id").toLong(), p.title))
+                p ->
+                TaskModel(taskBackendClient.updateTask(req.pathVariable("id").toLong(), p.title))
             })
 
     fun deleteByTaskId(req: ServerRequest) = ok().json().body(
