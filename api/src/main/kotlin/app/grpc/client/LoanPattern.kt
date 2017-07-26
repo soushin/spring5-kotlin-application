@@ -1,4 +1,4 @@
-package valencia.currency.gateway.grpc.client
+package app.grpc.client
 
 import io.grpc.ManagedChannel
 
