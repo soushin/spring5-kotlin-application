@@ -1,6 +1,8 @@
 .DS_Store
 .gradle
 build/
+backend/out/
+api/out/
 
 # Ignore Gradle GUI config
 gradle-app.setting

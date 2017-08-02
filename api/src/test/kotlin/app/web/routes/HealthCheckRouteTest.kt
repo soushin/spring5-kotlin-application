@@ -2,9 +2,11 @@ package app.web.routes
 
 import app.json
 import app.web.handler.*
-import app.web.routes.KotlinModule.Companion.any
+import app.KotlinModule.Companion.any
+import app.mock
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotlintest.matchers.shouldBe
 import org.junit.Before
 import org.junit.Test
@@ -49,8 +51,8 @@ class HealthCheckRouteTest {
                 .exchange()
                 .expectStatus().isOk
                 .expectBody()
-                .consumeAsStringWith {
-                    val actual: Response<*> = mapper.readValue(it)
+                .consumeWith {
+                    val actual: Response<*> = mapper.readValue(it.responseBody)
                     actual.data shouldBe true
                 }
     }

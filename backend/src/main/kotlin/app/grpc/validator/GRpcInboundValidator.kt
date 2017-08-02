@@ -15,14 +15,17 @@ object GRpcInboundValidator {
 
     private val logger = KotlinLogging.logger {}
 
-    fun validTaskInbound(request: TaskInbound?): Array<String> {
+    fun validTaskInbound(request: TaskInbound?): String {
         if (request == null)
             throw BadRequestException("invalid request")
 
         try {
             val taskId = request.taskId.toString()
 
-            return arrayOf(taskId)
+            if(taskId == "0")
+                throw BadRequestException("invalid request")
+
+            return taskId
         } catch (e : Exception) {
             val msg = "grpc server error, invalid request"
             logger.error { msg }
