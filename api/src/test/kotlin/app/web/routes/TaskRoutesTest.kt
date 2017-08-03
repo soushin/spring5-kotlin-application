@@ -1,15 +1,15 @@
 package app.web.routes
 
-import app.grpc.client.TaskBackendClient
 import app.grpc.server.gen.task.TaskOutbound
 import app.json
 import app.web.handler.CreateTaskInbound
 import app.web.handler.TaskHandler
 import app.web.handler.TaskModel
-import app.web.routes.KotlinModule.Companion.any
-import com.fasterxml.jackson.core.type.TypeReference
+import app.KotlinModule.Companion.any
+import app.mock
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotlintest.matchers.shouldBe
 import org.junit.Before
 import org.junit.Test
@@ -65,8 +65,8 @@ class TaskRoutesTest {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange().expectStatus().isOk
                 .expectBody()
-                .consumeAsStringWith {
-                    val actual: TaskModel = mapper.readValue(it)
+                .consumeWith {
+                    val actual: TaskModel = mapper.readValue(it.responseBody)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
@@ -84,8 +84,8 @@ class TaskRoutesTest {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange().expectStatus().isOk
                 .expectBody()
-                .consumeAsStringWith {
-                    val actual: List<TaskModel> = mapper.readValueTypeReference(it)
+                .consumeWith {
+                    val actual: List<TaskModel> = mapper.readValue(it.responseBody)
                     actual.size shouldBe 1
                     actual.get(0).id shouldBe 1L
                     actual.get(0).title shouldBe "task title"
@@ -105,8 +105,8 @@ class TaskRoutesTest {
                 .syncBody(CreateTaskInbound(title = "title"))
                 .exchange().expectStatus().isOk
                 .expectBody()
-                .consumeAsStringWith {
-                    val actual: TaskModel = mapper.readValue(it)
+                .consumeWith {
+                    val actual: TaskModel = mapper.readValue(it.responseBody)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
@@ -125,8 +125,8 @@ class TaskRoutesTest {
                 .syncBody(CreateTaskInbound(title = "title"))
                 .exchange().expectStatus().isOk
                 .expectBody()
-                .consumeAsStringWith {
-                    val actual: TaskModel = mapper.readValue(it)
+                .consumeWith {
+                    val actual: TaskModel = mapper.readValue(it.responseBody)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
@@ -144,8 +144,8 @@ class TaskRoutesTest {
                 .accept(MediaType.APPLICATION_JSON_UTF8)
                 .exchange().expectStatus().isOk
                 .expectBody()
-                .consumeAsStringWith {
-                    val actual: TaskModel = mapper.readValue(it)
+                .consumeWith {
+                    val actual: TaskModel = mapper.readValue(it.responseBody)
                     actual.id shouldBe 1L
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"

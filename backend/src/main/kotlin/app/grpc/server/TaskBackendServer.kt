@@ -41,7 +41,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
 
     override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         try {
-            val (taskId) = GRpcInboundValidator.validTaskInbound(request)
+            val taskId = GRpcInboundValidator.validTaskInbound(request)
 
             val log = GRpcLogContextHandler.getLog()
             log.elem { "taskId" to taskId }
@@ -131,7 +131,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
 
     override fun deleteTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         try {
-            val (taskId) = GRpcInboundValidator.validTaskInbound(request)
+            val taskId = GRpcInboundValidator.validTaskInbound(request)
 
             val log = GRpcLogContextHandler.getLog()
             log.elem { "taskId" to taskId }
@@ -153,7 +153,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
 
     override fun finishTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         try {
-            val (taskId) = GRpcInboundValidator.validTaskInbound(request)
+            val taskId = GRpcInboundValidator.validTaskInbound(request)
 
             val log = GRpcLogContextHandler.getLog()
             log.elem { "taskId" to taskId }

@@ -35,23 +35,20 @@ class TaskBackendClient(private val appProperties: AppProperties) {
                 }
             }.await().fold({ it }, { throw it })
 
-    suspend fun getTaskList(): List<TaskOutbound> {
-        val result = async(CommonPool) {
-            try {
-                val outbound = ShutdownLoan.using(getChannel(), { channel ->
-                    val msg = TaskListInbound.newBuilder().setPage(1).build()
-                    TaskServiceGrpc.newBlockingStub(channel).getTaskListService(msg).asSequence().map { it }.toList()
-                })
-                Result.Success<List<TaskOutbound>, GrpcException>(outbound)
-            } catch (e: Exception) {
-                val status = Status.fromThrowable(e)
-                logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }
-                Result.Failure<List<TaskOutbound>, GrpcException>(status with status.description)
-            }
-        }.await()
-
-        return result.fold({ it }, { throw it })
-    }
+    suspend fun getTaskList(): List<TaskOutbound> =
+            async(CommonPool) {
+                try {
+                    val outbound = ShutdownLoan.using(getChannel(), { channel ->
+                        val msg = TaskListInbound.newBuilder().setPage(1).build()
+                        TaskServiceGrpc.newBlockingStub(channel).getTaskListService(msg).asSequence().map { it }.toList()
+                    })
+                    Result.Success<List<TaskOutbound>, GrpcException>(outbound)
+                } catch (e: Exception) {
+                    val status = Status.fromThrowable(e)
+                    logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }
+                    Result.Failure<List<TaskOutbound>, GrpcException>(status with status.description)
+                }
+            }.await().fold({ it }, { throw it })
 
     fun createTask(title: String): TaskOutbound =
             try {
