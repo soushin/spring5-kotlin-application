@@ -1,6 +1,7 @@
 package app.grpc.server
 
 import app.config.AppProperties
+import app.grpc.interceptor.ExceptionFilter
 import app.grpc.interceptor.GRpcLogInterceptor
 import app.grpc.interceptor.MetricsInterceptor
 import io.grpc.BindableService
@@ -32,7 +33,8 @@ import kotlin.reflect.KClass
 class GRpcServerRunner(private val appProperties: AppProperties,
                        private val applicationContext: AbstractApplicationContext,
                        private val metricsInterceptor: MetricsInterceptor,
-                       private val grpcLogInterceptor: GRpcLogInterceptor) : CommandLineRunner, DisposableBean {
+                       private val grpcLogInterceptor: GRpcLogInterceptor,
+                       private val exceptionFilter: ExceptionFilter) : CommandLineRunner, DisposableBean {
 
     private val logger = KotlinLogging.logger {}
 
@@ -49,7 +51,7 @@ class GRpcServerRunner(private val appProperties: AppProperties,
             name ->
             val server = applicationContext.beanFactory.getBean(name, BindableService::class) as BindableService
             val service = server.bindService()
-            serverBuilder.addService(ServerInterceptors.intercept(service, metricsInterceptor, grpcLogInterceptor))
+            serverBuilder.addService(ServerInterceptors.intercept(service, metricsInterceptor, grpcLogInterceptor, exceptionFilter))
             logger.info { "$name service has been registered." }
         }
 

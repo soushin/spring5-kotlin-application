@@ -24,8 +24,6 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
                         private val deleteTaskService: DeleteTaskService,
                         private val finishTaskService: FinishTaskService) : TaskServiceGrpc.TaskServiceImplBase() {
 
-    private val logger = KotlinLogging.logger {}
-
     private fun getOutbound(entity: Task): TaskOutbound {
         val builder = TaskOutbound.newBuilder()
                 .setTaskId(entity.id!!)
@@ -40,136 +38,76 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
     }
 
     override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
-        try {
-            val taskId = GRpcInboundValidator.validTaskInbound(request)
+        val taskId = GRpcInboundValidator.validTaskInbound(request)
 
-            val log = GRpcLogContextHandler.getLog()
-            log.elem { "taskId" to taskId }
+        val log = GRpcLogContextHandler.getLog()
+        log.elem { "taskId" to taskId }
 
-            val task = getTaskService(GetTaskCommand(taskId.toLong()))
-            val msg = getOutbound(task)
-            responseObserver?.onNext(msg)
-            responseObserver?.onCompleted()
-        } catch (e: WebAppException.NotFoundException) {
-            logger.error { "gRPC server error, task not found." }
-            responseObserver?.onError(
-                    Status.NOT_FOUND.withDescription("task not found.").asRuntimeException())
-        } catch (e: WebAppException.BadRequestException) {
-            logger.error { "gRPC server error, invalid request." }
-            responseObserver?.onError(
-                    Status.INVALID_ARGUMENT.withDescription("invalid request.").asRuntimeException())
-        }
+        val task = getTaskService(GetTaskCommand(taskId.toLong()))
+        val msg = getOutbound(task)
+        responseObserver?.onNext(msg)
+        responseObserver?.onCompleted()
     }
 
     override fun getTaskListService(request: TaskListInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
-        try {
-            val (page) = GRpcInboundValidator.validTaskListInbound(request)
+        val (page) = GRpcInboundValidator.validTaskListInbound(request)
 
-            val log = GRpcLogContextHandler.getLog()
-            log.elem { "page" to page }
+        val log = GRpcLogContextHandler.getLog()
+        log.elem { "page" to page }
 
-            getTaskListService(GetTaskListCommand(page.toInt()))().forEach {
-                val msg = getOutbound(it)
-                responseObserver?.onNext(msg)
-            }
-            responseObserver?.onCompleted()
-        } catch (e: WebAppException.NotFoundException) {
-            logger.error { "gRPC server error, task not found." }
-            responseObserver?.onError(
-                    Status.NOT_FOUND.withDescription("task not found.").asRuntimeException())
-        } catch (e: WebAppException.BadRequestException) {
-            logger.error { "gRPC server error, invalid request." }
-            responseObserver?.onError(
-                    Status.INVALID_ARGUMENT.withDescription("invalid request.").asRuntimeException())
+        getTaskListService(GetTaskListCommand(page.toInt()))().forEach {
+            val msg = getOutbound(it)
+            responseObserver?.onNext(msg)
         }
+        responseObserver?.onCompleted()
     }
 
     override fun createTaskService(request: CreateTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
-        try {
-            val (title) = GRpcInboundValidator.validCreateTaskInbound(request)
+        val (title) = GRpcInboundValidator.validCreateTaskInbound(request)
 
-            val log = GRpcLogContextHandler.getLog()
-            log.elem { "title" to title }
+        val log = GRpcLogContextHandler.getLog()
+        log.elem { "title" to title }
 
-            val task = createTaskService(CreateTaskCommand(title))
-            val msg = getOutbound(task)
-            responseObserver?.onNext(msg)
-            responseObserver?.onCompleted()
-        } catch (e: Exception) {
-            logger.error { "gRPC server error." }
-            responseObserver?.onError(
-                    Status.INTERNAL.withDescription("task error.").asRuntimeException())
-        } catch (e: WebAppException.BadRequestException) {
-            logger.error { "gRPC server error, invalid request." }
-            responseObserver?.onError(
-                    Status.INVALID_ARGUMENT.withDescription("invalid request.").asRuntimeException())
-        }
+        val task = createTaskService(CreateTaskCommand(title))
+        val msg = getOutbound(task)
+        responseObserver?.onNext(msg)
+        responseObserver?.onCompleted()
     }
 
     override fun updateTaskService(request: UpdateTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
-        try {
-            val (taskId, title) = GRpcInboundValidator.validUpdateTaskInbound(request)
+        val (taskId, title) = GRpcInboundValidator.validUpdateTaskInbound(request)
 
-            val log = GRpcLogContextHandler.getLog()
-            log.elem { "taskId" to taskId }
-            log.elem { "title" to title }
+        val log = GRpcLogContextHandler.getLog()
+        log.elem { "taskId" to taskId }
+        log.elem { "title" to title }
 
-            val task = updateTaskService(UpdateTaskCommand(taskId.toLong(), title))
-            val msg = getOutbound(task)
-            responseObserver?.onNext(msg)
-            responseObserver?.onCompleted()
-        } catch (e: WebAppException.NotFoundException) {
-            logger.error { "gRPC server error, task not found." }
-            responseObserver?.onError(
-                    Status.NOT_FOUND.withDescription("task not found.").asRuntimeException())
-        } catch (e: WebAppException.BadRequestException) {
-            logger.error { "gRPC server error, invalid request." }
-            responseObserver?.onError(
-                    Status.INVALID_ARGUMENT.withDescription("invalid request.").asRuntimeException())
-        }
+        val task = updateTaskService(UpdateTaskCommand(taskId.toLong(), title))
+        val msg = getOutbound(task)
+        responseObserver?.onNext(msg)
+        responseObserver?.onCompleted()
     }
 
     override fun deleteTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
-        try {
-            val taskId = GRpcInboundValidator.validTaskInbound(request)
+        val taskId = GRpcInboundValidator.validTaskInbound(request)
 
-            val log = GRpcLogContextHandler.getLog()
-            log.elem { "taskId" to taskId }
+        val log = GRpcLogContextHandler.getLog()
+        log.elem { "taskId" to taskId }
 
-            val task = deleteTaskService(DeleteTaskCommand(taskId.toLong()))
-            val msg = getOutbound(task)
-            responseObserver?.onNext(msg)
-            responseObserver?.onCompleted()
-        } catch (e: WebAppException.NotFoundException) {
-            logger.error { "gRPC server error, task not found." }
-            responseObserver?.onError(
-                    Status.NOT_FOUND.withDescription("task not found.").asRuntimeException())
-        } catch (e: WebAppException.BadRequestException) {
-            logger.error { "gRPC server error, invalid request." }
-            responseObserver?.onError(
-                    Status.INVALID_ARGUMENT.withDescription("invalid request.").asRuntimeException())
-        }
+        val task = deleteTaskService(DeleteTaskCommand(taskId.toLong()))
+        val msg = getOutbound(task)
+        responseObserver?.onNext(msg)
+        responseObserver?.onCompleted()
     }
 
     override fun finishTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
-        try {
-            val taskId = GRpcInboundValidator.validTaskInbound(request)
+        val taskId = GRpcInboundValidator.validTaskInbound(request)
 
-            val log = GRpcLogContextHandler.getLog()
-            log.elem { "taskId" to taskId }
+        val log = GRpcLogContextHandler.getLog()
+        log.elem { "taskId" to taskId }
 
-            val task = finishTaskService(FinishTaskCommand(taskId.toLong()))
-            val msg = getOutbound(task)
-            responseObserver?.onNext(msg)
-            responseObserver?.onCompleted()
-        } catch (e: WebAppException.NotFoundException) {
-            logger.error { "gRPC server error, task not found." }
-            responseObserver?.onError(
-                    Status.NOT_FOUND.withDescription("task not found.").asRuntimeException())
-        } catch (e: WebAppException.BadRequestException) {
-            logger.error { "gRPC server error, invalid request." }
-            responseObserver?.onError(
-                    Status.INVALID_ARGUMENT.withDescription("invalid request.").asRuntimeException())
-        }
+        val task = finishTaskService(FinishTaskCommand(taskId.toLong()))
+        val msg = getOutbound(task)
+        responseObserver?.onNext(msg)
+        responseObserver?.onCompleted()
     }
 }

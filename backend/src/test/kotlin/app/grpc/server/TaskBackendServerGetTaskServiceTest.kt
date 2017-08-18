@@ -4,6 +4,7 @@ import app.WebAppException
 import app.entity.Task
 import app.grpc.handler.context.GRpcLogContextHandler
 import app.grpc.handler.log.GRpcLogBuilder
+import app.grpc.interceptor.ExceptionFilter
 import app.grpc.server.gen.task.TaskInbound
 import app.grpc.server.gen.task.TaskServiceGrpc
 import app.service.*
@@ -51,7 +52,11 @@ class TaskBackendServerGetTaskServiceTest {
         target = TaskBackendServer(getTaskService, getTaskListService, createTaskService, updateTaskService,
                 deleteTaskService, finishTaskService)
         inProcessServer = InProcessServerBuilder
-                .forName(UNIQUE_SERVER_NAME).addService(target).directExecutor().build()
+                .forName(UNIQUE_SERVER_NAME)
+                .addService(target)
+                .intercept(ExceptionFilter())
+                .directExecutor()
+                .build()
         inProcessChannel = InProcessChannelBuilder.forName(UNIQUE_SERVER_NAME).directExecutor().build()
 
         inProcessServer.start()
@@ -107,7 +112,7 @@ class TaskBackendServerGetTaskServiceTest {
         } catch (e: StatusRuntimeException) {
             // assertion
             e.status.code shouldBe Status.NOT_FOUND.code
-            e.message shouldBe "NOT_FOUND: task not found."
+            e.message shouldBe "NOT_FOUND: not found"
         }
     }
 
@@ -124,7 +129,7 @@ class TaskBackendServerGetTaskServiceTest {
         } catch (e: StatusRuntimeException) {
             // assertion
             e.status.code shouldBe Status.INVALID_ARGUMENT.code
-            e.message shouldBe "INVALID_ARGUMENT: invalid request."
+            e.message shouldBe "INVALID_ARGUMENT: grpc server error, invalid request"
         }
     }
 }
