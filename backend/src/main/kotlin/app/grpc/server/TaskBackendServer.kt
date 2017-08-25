@@ -8,9 +8,12 @@ import app.grpc.validator.GRpcInboundValidator
 import app.service.*
 import app.util.DateConverter.Format.FULL_UTC
 import app.util.DateConverter.to
+import com.google.protobuf.Timestamp
 import io.grpc.Status
 import io.grpc.stub.StreamObserver
 import mu.KotlinLogging
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 /**
  *
@@ -28,13 +31,18 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         val builder = TaskOutbound.newBuilder()
                 .setTaskId(entity.id!!)
                 .setTitle(entity.title)
-                .setCreatedAt(entity.createdAt to FULL_UTC)
-                .setUpdatedAt(entity.updatedAt to FULL_UTC)
+                .setCreatedAt(getTimestamp(entity.createdAt))
+                .setUpdatedAt(getTimestamp(entity.updatedAt))
 
         if (entity.finishedAt != null)
-            builder.setFinishedAt(entity.finishedAt to FULL_UTC)
+            builder.setFinishedAt(getTimestamp(entity.finishedAt))
 
         return builder.build()
+    }
+
+    private fun getTimestamp(date: LocalDateTime): Timestamp.Builder {
+        return Timestamp.newBuilder().setSeconds(java.sql.Timestamp.valueOf(date).toLocalDateTime()
+                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
     }
 
     override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {

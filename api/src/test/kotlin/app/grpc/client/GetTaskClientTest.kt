@@ -5,6 +5,8 @@ import app.grpc.GrpcException
 import app.grpc.server.gen.task.TaskInbound
 import app.grpc.server.gen.task.TaskOutbound
 import app.grpc.server.gen.task.TaskServiceGrpc
+import app.util.DateUtil
+import com.google.protobuf.Timestamp
 import io.grpc.ManagedChannel
 import io.grpc.Server
 import io.grpc.Status
@@ -22,6 +24,8 @@ import org.powermock.api.mockito.PowerMockito
 import org.powermock.core.classloader.annotations.PrepareForTest
 import org.powermock.modules.junit4.PowerMockRunner
 import org.springframework.http.HttpStatus
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 @RunWith(PowerMockRunner::class)
 @PrepareForTest(TaskBackendClient::class)
@@ -60,14 +64,21 @@ class GetTaskClientTest {
             responseObserver?.onNext(TaskOutbound.newBuilder()
                     .setTaskId(1)
                     .setTitle("mocked Task")
-                    .setFinishedAt("2017-01-01T23:59:59Z")
-                    .setCreatedAt("2017-01-02T23:59:59Z")
-                    .setUpdatedAt("2017-01-02T23:59:59Z")
+                    .setFinishedAt(getTimestamp(DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-01-01T23:59:59Z")))
+                    .setCreatedAt(getTimestamp(DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-01-02T23:59:59Z")))
+                    .setUpdatedAt(getTimestamp(DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-01-02T23:59:59Z")))
                     .build()
             )
             responseObserver?.onCompleted()
         }
+
+        private fun getTimestamp(date: LocalDateTime): Timestamp.Builder {
+            return Timestamp.newBuilder().setSeconds(java.sql.Timestamp.valueOf(date).toLocalDateTime()
+                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
+        }
     }
+
+
 
     @Test
     fun getTask() {
@@ -84,9 +95,19 @@ class GetTaskClientTest {
 
             actual.taskId shouldBe 1
             actual.title shouldBe "mocked Task"
-            actual.finishedAt shouldBe "2017-01-01T23:59:59Z"
-            actual.createdAt shouldBe "2017-01-02T23:59:59Z"
-            actual.updatedAt shouldBe "2017-01-02T23:59:59Z"
+
+            val finishedAt = DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-01-01T23:59:59Z")
+            val finishedAtTimestamp = java.sql.Timestamp.valueOf(finishedAt).toLocalDateTime()
+                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+            actual.finishedAt.seconds shouldBe finishedAtTimestamp
+
+            val createdAt = DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-01-02T23:59:59Z")
+            val createdAtTimestamp = java.sql.Timestamp.valueOf(createdAt).toLocalDateTime()
+                    .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
+
+            actual.createdAt.seconds shouldBe createdAtTimestamp
+            actual.updatedAt.seconds shouldBe createdAtTimestamp
         }
     }
 

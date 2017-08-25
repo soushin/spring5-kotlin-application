@@ -23,32 +23,41 @@ public interface TaskOutboundOrBuilder extends
       getTitleBytes();
 
   /**
-   * <code>string finishedAt = 3;</code>
+   * <code>.google.protobuf.Timestamp finishedAt = 3;</code>
    */
-  java.lang.String getFinishedAt();
+  boolean hasFinishedAt();
   /**
-   * <code>string finishedAt = 3;</code>
+   * <code>.google.protobuf.Timestamp finishedAt = 3;</code>
    */
-  com.google.protobuf.ByteString
-      getFinishedAtBytes();
+  com.google.protobuf.Timestamp getFinishedAt();
+  /**
+   * <code>.google.protobuf.Timestamp finishedAt = 3;</code>
+   */
+  com.google.protobuf.TimestampOrBuilder getFinishedAtOrBuilder();
 
   /**
-   * <code>string createdAt = 4;</code>
+   * <code>.google.protobuf.Timestamp createdAt = 4;</code>
    */
-  java.lang.String getCreatedAt();
+  boolean hasCreatedAt();
   /**
-   * <code>string createdAt = 4;</code>
+   * <code>.google.protobuf.Timestamp createdAt = 4;</code>
    */
-  com.google.protobuf.ByteString
-      getCreatedAtBytes();
+  com.google.protobuf.Timestamp getCreatedAt();
+  /**
+   * <code>.google.protobuf.Timestamp createdAt = 4;</code>
+   */
+  com.google.protobuf.TimestampOrBuilder getCreatedAtOrBuilder();
 
   /**
-   * <code>string updatedAt = 5;</code>
+   * <code>.google.protobuf.Timestamp updatedAt = 5;</code>
    */
-  java.lang.String getUpdatedAt();
+  boolean hasUpdatedAt();
   /**
-   * <code>string updatedAt = 5;</code>
+   * <code>.google.protobuf.Timestamp updatedAt = 5;</code>
    */
-  com.google.protobuf.ByteString
-      getUpdatedAtBytes();
+  com.google.protobuf.Timestamp getUpdatedAt();
+  /**
+   * <code>.google.protobuf.Timestamp updatedAt = 5;</code>
+   */
+  com.google.protobuf.TimestampOrBuilder getUpdatedAtOrBuilder();
 }

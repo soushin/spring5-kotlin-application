@@ -50,29 +50,32 @@ public final class TaskServiceProto {
     java.lang.String[] descriptorData = {
       "\n>github.com/nsoushi/spring5-kotlin-appl" +
       "ication-proto/task.proto\022\010messages\032\034goog" +
-      "le/api/annotations.proto\"\036\n\013TaskInbound\022" +
-      "\017\n\007task_id\030\001 \001(\r\"\037\n\017TaskListInbound\022\014\n\004p" +
-      "age\030\001 \001(\r\"\"\n\021CreateTaskInbound\022\r\n\005title\030" +
-      "\001 \001(\t\"3\n\021UpdateTaskInbound\022\017\n\007task_id\030\001 " +
-      "\001(\r\022\r\n\005title\030\002 \001(\t\"h\n\014TaskOutbound\022\017\n\007ta" +
-      "sk_id\030\001 \001(\r\022\r\n\005title\030\002 \001(\t\022\022\n\nfinishedAt" +
-      "\030\003 \001(\t\022\021\n\tcreatedAt\030\004 \001(\t\022\021\n\tupdatedAt\030\005" +
-      " \001(\t2\251\004\n\013TaskService\022Q\n\016GetTaskService\022\025",
-      ".messages.TaskInbound\032\026.messages.TaskOut" +
-      "bound\"\020\202\323\344\223\002\n\022\010/v1/task\022\\\n\022GetTaskListSe" +
-      "rvice\022\031.messages.TaskListInbound\032\026.messa" +
-      "ges.TaskOutbound\"\021\202\323\344\223\002\013\022\t/v1/tasks0\001\022Z\n" +
-      "\021CreateTaskService\022\033.messages.CreateTask" +
-      "Inbound\032\026.messages.TaskOutbound\"\020\202\323\344\223\002\n\"" +
-      "\010/v1/task\022Z\n\021UpdateTaskService\022\033.message" +
-      "s.UpdateTaskInbound\032\026.messages.TaskOutbo" +
-      "und\"\020\202\323\344\223\002\n\032\010/v1/task\022T\n\021DeleteTaskServi" +
-      "ce\022\025.messages.TaskInbound\032\026.messages.Tas",
-      "kOutbound\"\020\202\323\344\223\002\n*\010/v1/task\022[\n\021FinishTas" +
-      "kService\022\025.messages.TaskInbound\032\026.messag" +
-      "es.TaskOutbound\"\027\202\323\344\223\002\021\032\017/v1/task/finish" +
-      "B4\n\030app.grpc.server.gen.taskB\020TaskServic" +
-      "eProtoP\001Z\004taskb\006proto3"
+      "le/api/annotations.proto\032\037google/protobu" +
+      "f/timestamp.proto\"\036\n\013TaskInbound\022\017\n\007task" +
+      "_id\030\001 \001(\r\"\037\n\017TaskListInbound\022\014\n\004page\030\001 \001" +
+      "(\r\"\"\n\021CreateTaskInbound\022\r\n\005title\030\001 \001(\t\"3" +
+      "\n\021UpdateTaskInbound\022\017\n\007task_id\030\001 \001(\r\022\r\n\005" +
+      "title\030\002 \001(\t\"\274\001\n\014TaskOutbound\022\017\n\007task_id\030" +
+      "\001 \001(\r\022\r\n\005title\030\002 \001(\t\022.\n\nfinishedAt\030\003 \001(\013" +
+      "2\032.google.protobuf.Timestamp\022-\n\tcreatedA",
+      "t\030\004 \001(\0132\032.google.protobuf.Timestamp\022-\n\tu" +
+      "pdatedAt\030\005 \001(\0132\032.google.protobuf.Timesta" +
+      "mp2\251\004\n\013TaskService\022Q\n\016GetTaskService\022\025.m" +
+      "essages.TaskInbound\032\026.messages.TaskOutbo" +
+      "und\"\020\202\323\344\223\002\n\022\010/v1/task\022\\\n\022GetTaskListServ" +
+      "ice\022\031.messages.TaskListInbound\032\026.message" +
+      "s.TaskOutbound\"\021\202\323\344\223\002\013\022\t/v1/tasks0\001\022Z\n\021C" +
+      "reateTaskService\022\033.messages.CreateTaskIn" +
+      "bound\032\026.messages.TaskOutbound\"\020\202\323\344\223\002\n\"\010/" +
+      "v1/task\022Z\n\021UpdateTaskService\022\033.messages.",
+      "UpdateTaskInbound\032\026.messages.TaskOutboun" +
+      "d\"\020\202\323\344\223\002\n\032\010/v1/task\022T\n\021DeleteTaskService" +
+      "\022\025.messages.TaskInbound\032\026.messages.TaskO" +
+      "utbound\"\020\202\323\344\223\002\n*\010/v1/task\022[\n\021FinishTaskS" +
+      "ervice\022\025.messages.TaskInbound\032\026.messages" +
+      ".TaskOutbound\"\027\202\323\344\223\002\021\032\017/v1/task/finishB4" +
+      "\n\030app.grpc.server.gen.taskB\020TaskServiceP" +
+      "rotoP\001Z\004taskb\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -86,6 +89,7 @@ public final class TaskServiceProto {
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
           com.google.api.AnnotationsProto.getDescriptor(),
+          com.google.protobuf.TimestampProto.getDescriptor(),
         }, assigner);
     internal_static_messages_TaskInbound_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -123,6 +127,7 @@ public final class TaskServiceProto {
     com.google.protobuf.Descriptors.FileDescriptor
         .internalUpdateFileDescriptor(descriptor, registry);
     com.google.api.AnnotationsProto.getDescriptor();
+    com.google.protobuf.TimestampProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)
