@@ -7,9 +7,11 @@ import app.web.handler.TaskHandler
 import app.web.handler.TaskModel
 import app.KotlinModule.Companion.any
 import app.mock
+import app.util.DateUtil
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.google.protobuf.Timestamp
 import io.kotlintest.matchers.shouldBe
 import org.junit.Before
 import org.junit.Test
@@ -22,6 +24,8 @@ import org.springframework.web.reactive.function.server.ServerResponse.ok
 import org.springframework.web.reactive.function.server.body
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.time.LocalDateTime
+import java.time.ZoneId
 
 /**
  *
@@ -49,9 +53,14 @@ class TaskRoutesTest {
     val outbound = TaskOutbound.newBuilder()
             .setTaskId(1)
             .setTitle("task title")
-            .setCreatedAt("2017-06-13T16:22:52Z")
-            .setUpdatedAt("2017-06-13T16:22:52Z")
+            .setCreatedAt(getTimestamp(DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-06-13T16:22:52Z")))
+            .setUpdatedAt(getTimestamp(DateUtil.parse(DateUtil.Format.FULL_UTC)("2017-06-13T16:22:52Z")))
             .build()
+
+    private fun getTimestamp(date: LocalDateTime): Timestamp.Builder {
+        return Timestamp.newBuilder().setSeconds(java.sql.Timestamp.valueOf(date).toLocalDateTime()
+                .atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
+    }
 
     val mockModel = TaskModel(outbound)
 

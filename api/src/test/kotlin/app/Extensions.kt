@@ -1,11 +1,13 @@
 package app
 
+import app.util.DateUtil
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.mockito.Mockito
 import org.powermock.api.mockito.PowerMockito
 import org.springframework.http.MediaType
 import org.springframework.web.reactive.function.server.ServerResponse
+import java.time.LocalDateTime
 import kotlin.reflect.KClass
 
 /**
@@ -21,3 +23,5 @@ inline fun <reified T : Any> ObjectMapper.readValue(content: String) = this.read
 inline fun <reified T : Any> ObjectMapper.readValueTypeReference(content: String) = this.readValue<T>(content, object : TypeReference<T>() {})
 
 fun ServerResponse.BodyBuilder.json() = contentType(MediaType.APPLICATION_JSON_UTF8)
+
+fun LocalDateTime.convert(f: DateUtil.Format) = DateUtil.format(f)(this)

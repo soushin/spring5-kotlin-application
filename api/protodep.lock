@@ -2,5 +2,5 @@ proto_outdir = "./src/main/proto"
 
 [[dependencies]]
   target = "github.com/nsoushi/spring5-kotlin-application-proto/"
-  revision = "aa876dad0862ccf0e697ecd621e6b39f164c2848"
+  revision = "bc64577005c60ccac4871222dcd29154c0721f17"
   branch = "master"

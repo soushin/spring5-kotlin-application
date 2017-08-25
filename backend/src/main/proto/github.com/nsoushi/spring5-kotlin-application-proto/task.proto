@@ -8,6 +8,7 @@ option go_package = "task";
 package messages;
 
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 service TaskService {
   rpc GetTaskService (TaskInbound) returns (TaskOutbound) {
@@ -67,9 +68,9 @@ message UpdateTaskInbound {
 message TaskOutbound {
   uint32 task_id = 1;
   string title = 2;
-  string finishedAt = 3;
-  string createdAt = 4;
-  string updatedAt = 5;
+  google.protobuf.Timestamp finishedAt = 3;
+  google.protobuf.Timestamp createdAt = 4;
+  google.protobuf.Timestamp updatedAt = 5;
 }
 
 

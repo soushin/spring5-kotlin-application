@@ -1,16 +1,21 @@
 package app.web.handler
 
+import app.convert
 import app.grpc.client.TaskBackendClient
 import app.grpc.server.gen.task.TaskOutbound
 import app.json
+import app.util.DateUtil
+import app.util.DateUtil.to
+import com.google.protobuf.Timestamp
 import kotlinx.coroutines.experimental.runBlocking
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.ServerResponse.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.time.Instant
+import java.time.ZoneId
 
 /**
  *
@@ -52,9 +57,13 @@ data class TaskModel(val id: Long, val title: String, val finishedAt: String?, v
     constructor(entity: TaskOutbound) : this(
             id = entity.taskId.toLong(),
             title = entity.title,
-            finishedAt = entity.finishedAt ?: null,
-            createdAt = entity.createdAt,
-            updatedAt = entity.updatedAt
+            finishedAt = entity.finishedAt.let {
+                if (it != null)
+                    Instant.ofEpochMilli(it.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC)
+                else null
+            },
+            createdAt = Instant.ofEpochMilli(entity.createdAt.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC),
+            updatedAt = Instant.ofEpochMilli(entity.updatedAt.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC)
     )
 }
 
