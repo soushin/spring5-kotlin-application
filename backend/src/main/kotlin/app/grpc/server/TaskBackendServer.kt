@@ -27,22 +27,22 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
                         private val deleteTaskService: DeleteTaskService,
                         private val finishTaskService: FinishTaskService) : TaskServiceGrpc.TaskServiceImplBase() {
 
-private fun getOutbound(entity: Task): TaskOutbound {
-    val builder = TaskOutbound.newBuilder()
-            .setTaskId(entity.id!!)
-            .setTitle(entity.title)
-            .setCreatedAt(getTimestamp(entity.createdAt))
-            .setUpdatedAt(getTimestamp(entity.updatedAt))
+    private fun getOutbound(entity: Task): TaskOutbound {
+        val builder = TaskOutbound.newBuilder()
+                .setTaskId(entity.id!!)
+                .setTitle(entity.title)
+                .setCreatedAt(getTimestamp(entity.createdAt))
+                .setUpdatedAt(getTimestamp(entity.updatedAt))
 
-    if (entity.finishedAt != null)
-        builder.setFinishedAt(getTimestamp(entity.finishedAt))
+        if (entity.finishedAt != null)
+            builder.setFinishedAt(getTimestamp(entity.finishedAt))
 
-    return builder.build()
-}
+        return builder.build()
+    }
 
-private fun getTimestamp(date: LocalDateTime): Timestamp.Builder {
-    return Timestamp.newBuilder().setSeconds(date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
-}
+    private fun getTimestamp(date: LocalDateTime): Timestamp.Builder {
+        return Timestamp.newBuilder().setSeconds(date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
+    }
 
     override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         val taskId = GRpcInboundValidator.validTaskInbound(request)
