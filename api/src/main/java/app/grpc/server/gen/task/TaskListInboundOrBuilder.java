@@ -8,7 +8,15 @@ public interface TaskListInboundOrBuilder extends
     com.google.protobuf.MessageOrBuilder {
 
   /**
-   * <code>uint32 page = 1;</code>
+   * <code>.google.protobuf.UInt32Value page = 1;</code>
    */
-  int getPage();
+  boolean hasPage();
+  /**
+   * <code>.google.protobuf.UInt32Value page = 1;</code>
+   */
+  com.google.protobuf.UInt32Value getPage();
+  /**
+   * <code>.google.protobuf.UInt32Value page = 1;</code>
+   */
+  com.google.protobuf.UInt32ValueOrBuilder getPageOrBuilder();
 }

@@ -9,6 +9,7 @@ package messages;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
 
 service TaskService {
   rpc GetTaskService (TaskInbound) returns (TaskOutbound) {
@@ -53,7 +54,7 @@ message TaskInbound {
 }
 
 message TaskListInbound {
-  uint32 page = 1;
+  google.protobuf.UInt32Value page = 1;
 }
 
 message CreateTaskInbound {

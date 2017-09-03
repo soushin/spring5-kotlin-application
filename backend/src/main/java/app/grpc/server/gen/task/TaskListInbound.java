@@ -15,7 +15,6 @@ public  final class TaskListInbound extends
     super(builder);
   }
   private TaskListInbound() {
-    page_ = 0;
   }
 
   @java.lang.Override
@@ -43,9 +42,17 @@ public  final class TaskListInbound extends
             }
             break;
           }
-          case 8: {
+          case 10: {
+            com.google.protobuf.UInt32Value.Builder subBuilder = null;
+            if (page_ != null) {
+              subBuilder = page_.toBuilder();
+            }
+            page_ = input.readMessage(com.google.protobuf.UInt32Value.parser(), extensionRegistry);
+            if (subBuilder != null) {
+              subBuilder.mergeFrom(page_);
+              page_ = subBuilder.buildPartial();
+            }
 
-            page_ = input.readUInt32();
             break;
           }
         }
@@ -72,12 +79,24 @@ public  final class TaskListInbound extends
   }
 
   public static final int PAGE_FIELD_NUMBER = 1;
-  private int page_;
+  private com.google.protobuf.UInt32Value page_;
   /**
-   * <code>uint32 page = 1;</code>
+   * <code>.google.protobuf.UInt32Value page = 1;</code>
    */
-  public int getPage() {
-    return page_;
+  public boolean hasPage() {
+    return page_ != null;
+  }
+  /**
+   * <code>.google.protobuf.UInt32Value page = 1;</code>
+   */
+  public com.google.protobuf.UInt32Value getPage() {
+    return page_ == null ? com.google.protobuf.UInt32Value.getDefaultInstance() : page_;
+  }
+  /**
+   * <code>.google.protobuf.UInt32Value page = 1;</code>
+   */
+  public com.google.protobuf.UInt32ValueOrBuilder getPageOrBuilder() {
+    return getPage();
   }
 
   private byte memoizedIsInitialized = -1;
@@ -92,8 +111,8 @@ public  final class TaskListInbound extends
 
   public void writeTo(com.google.protobuf.CodedOutputStream output)
                       throws java.io.IOException {
-    if (page_ != 0) {
-      output.writeUInt32(1, page_);
+    if (page_ != null) {
+      output.writeMessage(1, getPage());
     }
   }
 
@@ -102,9 +121,9 @@ public  final class TaskListInbound extends
     if (size != -1) return size;
 
     size = 0;
-    if (page_ != 0) {
+    if (page_ != null) {
       size += com.google.protobuf.CodedOutputStream
-        .computeUInt32Size(1, page_);
+        .computeMessageSize(1, getPage());
     }
     memoizedSize = size;
     return size;
@@ -122,8 +141,11 @@ public  final class TaskListInbound extends
     app.grpc.server.gen.task.TaskListInbound other = (app.grpc.server.gen.task.TaskListInbound) obj;
 
     boolean result = true;
-    result = result && (getPage()
-        == other.getPage());
+    result = result && (hasPage() == other.hasPage());
+    if (hasPage()) {
+      result = result && getPage()
+          .equals(other.getPage());
+    }
     return result;
   }
 
@@ -134,8 +156,10 @@ public  final class TaskListInbound extends
     }
     int hash = 41;
     hash = (19 * hash) + getDescriptor().hashCode();
-    hash = (37 * hash) + PAGE_FIELD_NUMBER;
-    hash = (53 * hash) + getPage();
+    if (hasPage()) {
+      hash = (37 * hash) + PAGE_FIELD_NUMBER;
+      hash = (53 * hash) + getPage().hashCode();
+    }
     hash = (29 * hash) + unknownFields.hashCode();
     memoizedHashCode = hash;
     return hash;
@@ -254,8 +278,12 @@ public  final class TaskListInbound extends
     }
     public Builder clear() {
       super.clear();
-      page_ = 0;
-
+      if (pageBuilder_ == null) {
+        page_ = null;
+      } else {
+        page_ = null;
+        pageBuilder_ = null;
+      }
       return this;
     }
 
@@ -278,7 +306,11 @@ public  final class TaskListInbound extends
 
     public app.grpc.server.gen.task.TaskListInbound buildPartial() {
       app.grpc.server.gen.task.TaskListInbound result = new app.grpc.server.gen.task.TaskListInbound(this);
-      result.page_ = page_;
+      if (pageBuilder_ == null) {
+        result.page_ = page_;
+      } else {
+        result.page_ = pageBuilder_.build();
+      }
       onBuilt();
       return result;
     }
@@ -320,8 +352,8 @@ public  final class TaskListInbound extends
 
     public Builder mergeFrom(app.grpc.server.gen.task.TaskListInbound other) {
       if (other == app.grpc.server.gen.task.TaskListInbound.getDefaultInstance()) return this;
-      if (other.getPage() != 0) {
-        setPage(other.getPage());
+      if (other.hasPage()) {
+        mergePage(other.getPage());
       }
       onChanged();
       return this;
@@ -349,30 +381,121 @@ public  final class TaskListInbound extends
       return this;
     }
 
-    private int page_ ;
+    private com.google.protobuf.UInt32Value page_ = null;
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.UInt32Value, com.google.protobuf.UInt32Value.Builder, com.google.protobuf.UInt32ValueOrBuilder> pageBuilder_;
     /**
-     * <code>uint32 page = 1;</code>
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
      */
-    public int getPage() {
-      return page_;
+    public boolean hasPage() {
+      return pageBuilder_ != null || page_ != null;
     }
     /**
-     * <code>uint32 page = 1;</code>
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
      */
-    public Builder setPage(int value) {
-      
-      page_ = value;
-      onChanged();
+    public com.google.protobuf.UInt32Value getPage() {
+      if (pageBuilder_ == null) {
+        return page_ == null ? com.google.protobuf.UInt32Value.getDefaultInstance() : page_;
+      } else {
+        return pageBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
+     */
+    public Builder setPage(com.google.protobuf.UInt32Value value) {
+      if (pageBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        page_ = value;
+        onChanged();
+      } else {
+        pageBuilder_.setMessage(value);
+      }
+
       return this;
     }
     /**
-     * <code>uint32 page = 1;</code>
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
+     */
+    public Builder setPage(
+        com.google.protobuf.UInt32Value.Builder builderForValue) {
+      if (pageBuilder_ == null) {
+        page_ = builderForValue.build();
+        onChanged();
+      } else {
+        pageBuilder_.setMessage(builderForValue.build());
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
+     */
+    public Builder mergePage(com.google.protobuf.UInt32Value value) {
+      if (pageBuilder_ == null) {
+        if (page_ != null) {
+          page_ =
+            com.google.protobuf.UInt32Value.newBuilder(page_).mergeFrom(value).buildPartial();
+        } else {
+          page_ = value;
+        }
+        onChanged();
+      } else {
+        pageBuilder_.mergeFrom(value);
+      }
+
+      return this;
+    }
+    /**
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
      */
     public Builder clearPage() {
-      
-      page_ = 0;
-      onChanged();
+      if (pageBuilder_ == null) {
+        page_ = null;
+        onChanged();
+      } else {
+        page_ = null;
+        pageBuilder_ = null;
+      }
+
       return this;
+    }
+    /**
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
+     */
+    public com.google.protobuf.UInt32Value.Builder getPageBuilder() {
+      
+      onChanged();
+      return getPageFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
+     */
+    public com.google.protobuf.UInt32ValueOrBuilder getPageOrBuilder() {
+      if (pageBuilder_ != null) {
+        return pageBuilder_.getMessageOrBuilder();
+      } else {
+        return page_ == null ?
+            com.google.protobuf.UInt32Value.getDefaultInstance() : page_;
+      }
+    }
+    /**
+     * <code>.google.protobuf.UInt32Value page = 1;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilderV3<
+        com.google.protobuf.UInt32Value, com.google.protobuf.UInt32Value.Builder, com.google.protobuf.UInt32ValueOrBuilder> 
+        getPageFieldBuilder() {
+      if (pageBuilder_ == null) {
+        pageBuilder_ = new com.google.protobuf.SingleFieldBuilderV3<
+            com.google.protobuf.UInt32Value, com.google.protobuf.UInt32Value.Builder, com.google.protobuf.UInt32ValueOrBuilder>(
+                getPage(),
+                getParentForChildren(),
+                isClean());
+        page_ = null;
+      }
+      return pageBuilder_;
     }
     public final Builder setUnknownFields(
         final com.google.protobuf.UnknownFieldSet unknownFields) {

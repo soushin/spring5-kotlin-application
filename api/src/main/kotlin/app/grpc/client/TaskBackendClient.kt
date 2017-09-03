@@ -5,6 +5,7 @@ import app.grpc.GrpcException
 import app.grpc.GrpcException.Companion.with
 import app.grpc.server.gen.task.*
 import com.github.kittinunf.result.Result
+import com.google.protobuf.UInt32Value
 import io.grpc.Status
 import io.grpc.netty.NettyChannelBuilder
 import kotlinx.coroutines.experimental.*
@@ -39,7 +40,7 @@ class TaskBackendClient(private val appProperties: AppProperties) {
             async(CommonPool) {
                 try {
                     val outbound = ShutdownLoan.using(getChannel(), { channel ->
-                        val msg = TaskListInbound.newBuilder().setPage(1).build()
+                        val msg = TaskListInbound.newBuilder().setPage(UInt32Value.newBuilder().setValue(10).build()).build()
                         TaskServiceGrpc.newBlockingStub(channel).getTaskListService(msg).asSequence().map { it }.toList()
                     })
                     Result.Success<List<TaskOutbound>, GrpcException>(outbound)

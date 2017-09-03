@@ -14,6 +14,7 @@ import mu.KotlinLogging
 object GRpcInboundValidator {
 
     private val logger = KotlinLogging.logger {}
+    private val DEFAULT_PAGE_LIMIT = 10
 
     fun validTaskInbound(request: TaskInbound?): String {
         if (request == null)
@@ -38,10 +39,14 @@ object GRpcInboundValidator {
             throw BadRequestException("invalid request")
 
         try {
-            val page = request.page.toString()
-            validPage(page.toInt())
 
-            return arrayOf(page)
+            val page = when {
+                request.hasPage() -> request.page.value
+                else -> DEFAULT_PAGE_LIMIT
+            }
+
+            validPage(page)
+            return arrayOf(page.toString())
         } catch (e : Exception) {
             val msg = "grpc server error, invalid request"
             logger.error { msg }
