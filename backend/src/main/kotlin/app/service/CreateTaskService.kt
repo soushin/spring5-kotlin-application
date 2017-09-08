@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class CreateTaskCommand(val title: String)
 
+interface CreateTaskService {
+    fun createTask(command: CreateTaskCommand): Task
+}
+
 @Service("createTaskService")
-class CreateTaskService(private val taskRepository: TaskRepository) {
+class CreateTaskServiceImpl(private val taskRepository: TaskRepository) : CreateTaskService {
 
     @Transactional
-    fun createTask(command: CreateTaskCommand): Task {
+    override fun createTask(command: CreateTaskCommand): Task {
         return taskRepository.create(command.title).fold({
             task -> task
         }, {
