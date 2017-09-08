@@ -3,7 +3,6 @@ package app.service
 import app.entity.Task
 import app.repository.RepositoryException.Companion.handle
 import app.repository.TaskRepository
-import com.github.kittinunf.result.Validation
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -14,13 +13,11 @@ import org.springframework.transaction.annotation.Transactional
 
 data class DeleteTaskCommand(val id: Long)
 
-typealias DeleteTaskService = ApplicationService<DeleteTaskCommand, Task>
-
 @Service("deleteTaskService")
-class DeleteTaskServiceImpl(private val taskRepository: TaskRepository) : DeleteTaskService {
+class DeleteTaskService(private val taskRepository: TaskRepository) {
 
     @Transactional
-    override fun invoke(command: DeleteTaskCommand): Task {
+    fun deleteTask(command: DeleteTaskCommand): Task {
         return taskRepository.deleteById(command.id).fold({
             task -> task
         }, {
