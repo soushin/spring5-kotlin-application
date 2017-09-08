@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class UpdateTaskCommand(val id: Long, val title: String)
 
+interface UpdateTaskService {
+    fun updateTask(command: UpdateTaskCommand): Task
+}
+
 @Service("updateTaskService")
-class UpdateTaskService(private val taskRepository: TaskRepository) {
+class UpdateTaskServiceImpl(private val taskRepository: TaskRepository) : UpdateTaskService {
 
     @Transactional
-    fun updateTask(command: UpdateTaskCommand): Task {
+    override fun updateTask(command: UpdateTaskCommand): Task {
         return taskRepository.updateById(command.id, command.title).fold({
             task -> task
         }, {

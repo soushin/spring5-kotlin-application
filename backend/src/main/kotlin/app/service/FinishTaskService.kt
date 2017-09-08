@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class FinishTaskCommand(val id: Long)
 
+interface FinishTaskService {
+    fun finishTask(command: FinishTaskCommand): Task
+}
+
 @Service("finishTaskService")
-class FinishTaskService(private val taskRepository: TaskRepository) {
+class FinishTaskServiceImpl(private val taskRepository: TaskRepository) : FinishTaskService {
 
     @Transactional
-    fun finishTask(command: FinishTaskCommand): Task {
+    override fun finishTask(command: FinishTaskCommand): Task {
         return taskRepository.finishById(command.id).fold({
             task -> task
         }, {

@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class GetTaskCommand(val id: Long)
 
+interface GetTaskService {
+    fun getTask(command: GetTaskCommand): Task
+}
+
 @Service("getTaskService")
-class GetTaskService(private val taskRepository: TaskRepository) {
+class GetTaskServiceImpl(private val taskRepository: TaskRepository) : GetTaskService {
 
     @Transactional(readOnly = true)
-    fun getTask(command: GetTaskCommand): Task {
+    override fun getTask(command: GetTaskCommand): Task {
         return taskRepository.findOneById(command.id).fold({
             task -> task
         }, {

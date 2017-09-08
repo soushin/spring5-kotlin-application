@@ -13,11 +13,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class DeleteTaskCommand(val id: Long)
 
+interface DeleteTaskService {
+    fun deleteTask(command: DeleteTaskCommand): Task
+}
+
 @Service("deleteTaskService")
-class DeleteTaskService(private val taskRepository: TaskRepository) {
+class DeleteTaskServiceImpl(private val taskRepository: TaskRepository) : DeleteTaskService {
 
     @Transactional
-    fun deleteTask(command: DeleteTaskCommand): Task {
+    override fun deleteTask(command: DeleteTaskCommand): Task {
         return taskRepository.deleteById(command.id).fold({
             task -> task
         }, {

@@ -14,11 +14,15 @@ import org.springframework.transaction.annotation.Transactional
 
 data class FindTaskCommand(val page: Int)
 
+interface FindTaskService {
+    fun findTask(command: FindTaskCommand): ListModel<Task>
+}
+
 @Service("findTaskService")
-class FindTaskService(private val taskRepository: TaskRepository) {
+class FindTaskServiceImpl(private val taskRepository: TaskRepository) : FindTaskService {
 
     @Transactional(readOnly = true)
-    fun findTask(command: FindTaskCommand): ListModel<Task> {
+    override fun findTask(command: FindTaskCommand): ListModel<Task> {
         return taskRepository.findMany().fold({
             taskList -> ListModel(taskList)
         }, {
