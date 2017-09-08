@@ -17,74 +17,47 @@ object GRpcInboundValidator {
     private val DEFAULT_PAGE_LIMIT = 10
 
     fun validTaskInbound(request: TaskInbound?): String {
-        if (request == null)
+
+        request ?: throw BadRequestException("invalid request")
+
+        val taskId = request.taskId.toString()
+
+        if (taskId == "0")
             throw BadRequestException("invalid request")
 
-        try {
-            val taskId = request.taskId.toString()
-
-            if(taskId == "0")
-                throw BadRequestException("invalid request")
-
-            return taskId
-        } catch (e : Exception) {
-            val msg = "grpc server error, invalid request"
-            logger.error { msg }
-            throw BadRequestException(msg)
-        }
+        return taskId
     }
 
     fun validTaskListInbound(request: TaskListInbound?): Array<String> {
-        if (request == null)
-            throw BadRequestException("invalid request")
 
-        try {
+        request ?: throw BadRequestException("invalid request")
 
-            val page = when {
-                request.hasPage() -> request.page.value
-                else -> DEFAULT_PAGE_LIMIT
-            }
-
-            validPage(page)
-            return arrayOf(page.toString())
-        } catch (e : Exception) {
-            val msg = "grpc server error, invalid request"
-            logger.error { msg }
-            throw BadRequestException(msg)
+        val page = when {
+            request.hasPage() -> request.page.value
+            else -> DEFAULT_PAGE_LIMIT
         }
+
+        validPage(page)
+        return arrayOf(page.toString())
     }
 
     fun validCreateTaskInbound(request: CreateTaskInbound?): Array<String> {
-        if (request == null)
-            throw BadRequestException("invalid request")
+        request ?: throw BadRequestException("invalid request")
 
-        try {
-            val title = request.title.toString()
-            validTitle(title)
+        val title = request.title.toString()
+        validTitle(title)
 
-            return arrayOf(title)
-        } catch (e : Exception) {
-            val msg = "grpc server error, invalid request"
-            logger.error { msg }
-            throw BadRequestException(msg)
-        }
+        return arrayOf(title)
     }
 
     fun validUpdateTaskInbound(request: UpdateTaskInbound?): Array<String> {
-        if (request == null)
-            throw BadRequestException("invalid request")
+        request ?: throw BadRequestException("invalid request")
 
-        try {
-            val title = request.title.toString()
-            validTitle(title)
-            val taskId = request.taskId.toString()
+        val title = request.title.toString()
+        validTitle(title)
+        val taskId = request.taskId.toString()
 
-            return arrayOf(taskId, title)
-        } catch (e : Exception) {
-            val msg = "grpc server error, invalid request"
-            logger.error { msg }
-            throw BadRequestException(msg)
-        }
+        return arrayOf(taskId, title)
     }
 
     private fun validPage(page: Int) {
