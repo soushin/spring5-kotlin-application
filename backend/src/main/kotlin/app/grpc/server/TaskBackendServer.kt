@@ -1,17 +1,23 @@
 package app.grpc.server
 
-import app.WebAppException
 import app.entity.Task
 import app.grpc.handler.context.GRpcLogContextHandler
 import app.grpc.server.gen.task.*
 import app.grpc.validator.GRpcInboundValidator
-import app.service.*
-import app.util.DateConverter.Format.FULL_UTC
-import app.util.DateConverter.to
+import app.service.CreateTaskCommand
+import app.service.CreateTaskService
+import app.service.DeleteTaskCommand
+import app.service.DeleteTaskService
+import app.service.FindTaskCommand
+import app.service.FindTaskService
+import app.service.FinishTaskCommand
+import app.service.FinishTaskService
+import app.service.GetTaskCommand
+import app.service.GetTaskService
+import app.service.UpdateTaskCommand
+import app.service.UpdateTaskService
 import com.google.protobuf.Timestamp
-import io.grpc.Status
 import io.grpc.stub.StreamObserver
-import mu.KotlinLogging
 import java.time.LocalDateTime
 import java.time.ZoneId
 
@@ -21,7 +27,7 @@ import java.time.ZoneId
  */
 @GRpcService
 class TaskBackendServer(private val getTaskService: GetTaskService,
-                        private val getTaskListService: GetTaskListService,
+                        private val findTaskService: FindTaskService,
                         private val createTaskService: CreateTaskService,
                         private val updateTaskService: UpdateTaskService,
                         private val deleteTaskService: DeleteTaskService,
@@ -50,7 +56,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         val log = GRpcLogContextHandler.getLog()
         log.elem { "taskId" to taskId }
 
-        val task = getTaskService(GetTaskCommand(taskId.toLong()))
+        val task = getTaskService.getTask(GetTaskCommand(taskId.toLong()))
         val msg = getOutbound(task)
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()
@@ -62,7 +68,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         val log = GRpcLogContextHandler.getLog()
         log.elem { "page" to page }
 
-        getTaskListService(GetTaskListCommand(page.toInt()))().forEach {
+        (findTaskService.findTask(FindTaskCommand(page.toInt())))().forEach {
             val msg = getOutbound(it)
             responseObserver?.onNext(msg)
         }
@@ -75,7 +81,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         val log = GRpcLogContextHandler.getLog()
         log.elem { "title" to title }
 
-        val task = createTaskService(CreateTaskCommand(title))
+        val task = createTaskService.createTask(CreateTaskCommand(title))
         val msg = getOutbound(task)
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()
@@ -88,7 +94,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         log.elem { "taskId" to taskId }
         log.elem { "title" to title }
 
-        val task = updateTaskService(UpdateTaskCommand(taskId.toLong(), title))
+        val task = updateTaskService.updateTask(UpdateTaskCommand(taskId.toLong(), title))
         val msg = getOutbound(task)
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()
@@ -100,7 +106,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         val log = GRpcLogContextHandler.getLog()
         log.elem { "taskId" to taskId }
 
-        val task = deleteTaskService(DeleteTaskCommand(taskId.toLong()))
+        val task = deleteTaskService.deleteTask(DeleteTaskCommand(taskId.toLong()))
         val msg = getOutbound(task)
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()
@@ -112,7 +118,7 @@ class TaskBackendServer(private val getTaskService: GetTaskService,
         val log = GRpcLogContextHandler.getLog()
         log.elem { "taskId" to taskId }
 
-        val task = finishTaskService(FinishTaskCommand(taskId.toLong()))
+        val task = finishTaskService.finishTask(FinishTaskCommand(taskId.toLong()))
         val msg = getOutbound(task)
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()

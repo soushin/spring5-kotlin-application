@@ -12,15 +12,13 @@ import org.springframework.transaction.annotation.Transactional
  * @author nsoushi
  */
 
-data class GetTaskListCommand(val page: Int)
+data class FindTaskCommand(val page: Int)
 
-typealias GetTaskListService = ApplicationService<GetTaskListCommand, ListModel<Task>>
-
-@Service("getTaskListService")
-class GetTaskListServiceImpl(private val taskRepository: TaskRepository) : GetTaskListService {
+@Service("findTaskService")
+class FindTaskService(private val taskRepository: TaskRepository) {
 
     @Transactional(readOnly = true)
-    override fun invoke(command: GetTaskListCommand): ListModel<Task> {
+    fun findTask(command: FindTaskCommand): ListModel<Task> {
         return taskRepository.findMany().fold({
             taskList -> ListModel(taskList)
         }, {

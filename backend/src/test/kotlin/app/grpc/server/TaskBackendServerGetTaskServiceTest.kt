@@ -7,7 +7,13 @@ import app.grpc.handler.log.GRpcLogBuilder
 import app.grpc.interceptor.ExceptionFilter
 import app.grpc.server.gen.task.TaskInbound
 import app.grpc.server.gen.task.TaskServiceGrpc
-import app.service.*
+import app.service.CreateTaskService
+import app.service.DeleteTaskService
+import app.service.FindTaskService
+import app.service.FinishTaskService
+import app.service.GetTaskCommand
+import app.service.GetTaskService
+import app.service.UpdateTaskService
 import io.grpc.ManagedChannel
 import io.grpc.Server
 import io.grpc.Status
@@ -33,7 +39,7 @@ class TaskBackendServerGetTaskServiceTest {
     lateinit var inProcessChannel: ManagedChannel
 
     lateinit var getTaskService: GetTaskService
-    lateinit var getTaskListService: GetTaskListService
+    lateinit var getTaskListService: FindTaskService
     lateinit var createTaskService: CreateTaskService
     lateinit var updateTaskService: UpdateTaskService
     lateinit var deleteTaskService: DeleteTaskService
@@ -42,12 +48,12 @@ class TaskBackendServerGetTaskServiceTest {
 
     @Before
     fun setUp() {
-        getTaskService = mock(GetTaskServiceImpl::class)
-        getTaskListService = mock(GetTaskListServiceImpl::class)
-        createTaskService = mock(CreateTaskServiceImpl::class)
-        updateTaskService = mock(UpdateTaskServiceImpl::class)
-        deleteTaskService = mock(DeleteTaskServiceImpl::class)
-        finishTaskService = mock(FinishTaskServiceImpl::class)
+        getTaskService = mock(GetTaskService::class)
+        getTaskListService = mock(FindTaskService::class)
+        createTaskService = mock(CreateTaskService::class)
+        updateTaskService = mock(UpdateTaskService::class)
+        deleteTaskService = mock(DeleteTaskService::class)
+        finishTaskService = mock(FinishTaskService::class)
 
         target = TaskBackendServer(getTaskService, getTaskListService, createTaskService, updateTaskService,
                 deleteTaskService, finishTaskService)
@@ -81,7 +87,7 @@ class TaskBackendServerGetTaskServiceTest {
         // mock
         mockStatic(GRpcLogContextHandler::class)
         Mockito.`when`(GRpcLogContextHandler.getLog()).thenReturn(GRpcLogBuilder())
-        Mockito.`when`(getTaskService(command)).thenReturn(task)
+        Mockito.`when`(getTaskService.getTask(command)).thenReturn(task)
 
         // request server
         val blockingStub = TaskServiceGrpc.newBlockingStub(inProcessChannel)
@@ -103,7 +109,7 @@ class TaskBackendServerGetTaskServiceTest {
         // mock
         mockStatic(GRpcLogContextHandler::class)
         Mockito.`when`(GRpcLogContextHandler.getLog()).thenReturn(GRpcLogBuilder())
-        Mockito.`when`(getTaskService(command)).thenThrow(WebAppException.NotFoundException("not found"))
+        Mockito.`when`(getTaskService.getTask(command)).thenThrow(WebAppException.NotFoundException("not found"))
 
         try {
             // request server
