@@ -18,6 +18,7 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.support.AbstractApplicationContext
 import org.springframework.core.type.StandardMethodMetadata
+import org.springframework.stereotype.Component
 import reactor.core.publisher.Flux
 import reactor.core.publisher.toFlux
 import java.io.File
@@ -29,7 +30,8 @@ import kotlin.reflect.KClass
  *
  * @author nsoushi
  */
-@Configuration
+//@Configuration
+@Component
 class GRpcServerRunner(private val appProperties: AppProperties,
                        private val applicationContext: AbstractApplicationContext,
                        private val metricsInterceptor: MetricsInterceptor,
