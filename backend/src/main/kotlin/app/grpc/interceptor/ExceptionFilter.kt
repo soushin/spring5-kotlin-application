@@ -5,6 +5,7 @@ import app.repository.RepositoryException
 import io.grpc.*
 import mu.KotlinLogging
 import org.springframework.dao.EmptyResultDataAccessException
+import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Component
 
 /**
@@ -52,8 +53,12 @@ class ExceptionFilter : ServerInterceptor {
                     Status.fromCode(Status.ALREADY_EXISTS.code).withDescription(ex.message), headers)
             is WebAppException.BadRequestException -> call?.close(
                     Status.fromCode(Status.INVALID_ARGUMENT.code).withDescription(ex.message), headers)
-            is WebAppException.NotFoundException -> call?.close(
-                    Status.fromCode(Status.NOT_FOUND.code).withDescription(ex.message), headers)
+            is WebAppException.NotFoundException -> {
+                Metadata.Key.of("custom_status", Metadata.ASCII_STRING_MARSHALLER).let {
+                    headers?.put(it, HttpStatus.NOT_FOUND.value().toString())
+                }
+                call?.close(Status.fromCode(Status.NOT_FOUND.code).withDescription(ex.message), headers)
+            }
             is EmptyResultDataAccessException -> call?.close(
                     Status.fromCode(Status.NOT_FOUND.code).withDescription("data not found."), headers)
             else -> call?.close(Status.fromCode(Status.INTERNAL.code).withDescription(ex.message), headers)
