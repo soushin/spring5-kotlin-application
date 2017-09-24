@@ -46,18 +46,11 @@ class TaskBackendServerGetTaskServiceTest {
     lateinit var inProcessServer: Server
     lateinit var inProcessChannel: ManagedChannel
 
-    lateinit var getTaskService: GetTaskService
-    lateinit var getTaskListService: FindTaskService
-    lateinit var createTaskService: CreateTaskService
-    lateinit var updateTaskService: UpdateTaskService
-    lateinit var deleteTaskService: DeleteTaskService
-    lateinit var finishTaskService: FinishTaskService
     lateinit var delegateTaskService: DelegateTaskService
     lateinit var target: TaskBackendServer
 
     private val metadataCaptor = ArgumentCaptor.forClass(io.grpc.Metadata::class.java)
     private val mockServerInterceptor = Mockito.spy(TestInterceptor())
-
     private class TestInterceptor : ServerInterceptor {
         override fun <ReqT : Any?, RespT : Any?> interceptCall(call: ServerCall<ReqT, RespT>?, headers: io.grpc.Metadata?,
                                                                next: ServerCallHandler<ReqT, RespT>?): ServerCall.Listener<ReqT> {
@@ -69,12 +62,6 @@ class TaskBackendServerGetTaskServiceTest {
 
     @Before
     fun setUp() {
-        getTaskService = mock(GetTaskService::class)
-        getTaskListService = mock(FindTaskService::class)
-        createTaskService = mock(CreateTaskService::class)
-        updateTaskService = mock(UpdateTaskService::class)
-        deleteTaskService = mock(DeleteTaskService::class)
-        finishTaskService = mock(FinishTaskService::class)
         delegateTaskService = mock(DelegateTaskService::class)
 
         target = TaskBackendServer(delegateTaskService)
