@@ -1,0 +1,4 @@
+docs/artifact/*
+!docs/artifact/.gitkeep
+docs/define/*
+!docs/define/.gitkeep

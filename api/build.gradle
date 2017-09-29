@@ -191,11 +191,11 @@ task protoDep {
     }
 }
 
-tasks.whenTaskAdded { task ->
-    if (task.name == "generateProto" && !project.hasProperty("IGNORE_PROTO_DEP")) {
-        task.dependsOn protoDep
-    }
-}
+//tasks.whenTaskAdded { task ->
+//    if (task.name == "generateProto" && !project.hasProperty("IGNORE_PROTO_DEP")) {
+//        task.dependsOn protoDep
+//    }
+//}
 
 kotlin {
     experimental {

@@ -1,14 +1,18 @@
 package app
 
 import org.springframework.http.HttpStatus
+import app.annotation.ApiDocProperty
 
 /**
  *
  * @author nsoushi
  */
 data class ErrorItem(
+        @ApiDocProperty(value = "メッセージ", example = "task notfound.", nullable = true)
         val message: String,
+        @ApiDocProperty(value = "エラーコード", example = "404", nullable = true)
         val errorCode: String?,
+        @ApiDocProperty(value = "エラー内容", example = "", nullable = true)
         val field: String?
 )
 
