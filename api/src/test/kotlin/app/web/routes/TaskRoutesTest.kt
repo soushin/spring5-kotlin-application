@@ -1,11 +1,17 @@
 package app.web.routes
 
+import app.ErrorItem
 import app.grpc.server.gen.task.TaskOutbound
 import app.json
 import app.web.handler.CreateTaskInbound
 import app.web.handler.TaskHandler
 import app.web.handler.TaskModel
 import app.KotlinModule.Companion.any
+import app.WebAppException
+import app.apidoc.ApiErrorExample
+import app.apidoc.ApiParam
+import app.apidoc.ApiSuccessExample
+import app.apidoc.DefineBuilder
 import app.mock
 import app.util.DateUtil
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -17,6 +23,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mockito.`when`
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.junit4.SpringRunner
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -64,8 +71,25 @@ class TaskRoutesTest {
 
     val mockModel = TaskModel(outbound)
 
+    /**
+     * @api {GET} /api/task/:taskId タスクの取得
+     * @apiName GetTask
+     * @apiGroup Task
+     * @apiVersion 1.0.0
+     *
+     * @apiUse GetTaskOk
+     * @apiUse GetTaskNotFound
+     *
+     */
     @Test
     fun `GET Task`() {
+
+        val define = DefineBuilder({
+            version { "1.0.0" }
+            name { "GetTaskOk" }
+        })
+
+        define.param { ApiParam("taskId", "タスクID", "23445", false, "7") }
 
         // mock
         `when`(taskHandler.fetchByTaskId(any())).thenReturn(ok().json().body(Mono.just(mockModel)))
@@ -80,7 +104,37 @@ class TaskRoutesTest {
                     actual.title shouldBe "task title"
                     actual.createdAt shouldBe "2017-06-13T16:22:52Z"
                     actual.updatedAt shouldBe "2017-06-13T16:22:52Z"
+
+                    define.success { actual }
+                    define.successExample { ApiSuccessExample("Success", HttpStatus.OK, actual) }
                 }
+
+        define.genDoc()
+    }
+
+    @Test
+    fun `GET Task NotFound`() {
+
+        val define = DefineBuilder({
+            version { "1.0.0" }
+            name { "GetTaskNotFound" }
+        })
+
+        // mock
+        `when`(taskHandler.fetchByTaskId(any())).thenThrow(WebAppException.NotFoundException("task notfound."))
+
+        client.get().uri("/api/task/1")
+                .accept(MediaType.APPLICATION_JSON_UTF8)
+                .exchange().expectStatus().isNotFound
+                .expectBody()
+                .consumeWith {
+                    val actual: ErrorItem = mapper.readValue(it.responseBody)
+
+                    define.error { actual }
+                    define.errorExample { ApiErrorExample("BadRequest", HttpStatus.BAD_REQUEST, actual) }
+                }
+
+        define.genDoc()
     }
 
     @Test
