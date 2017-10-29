@@ -2,7 +2,12 @@ package app.grpc.server
 
 import app.entity.Task
 import app.grpc.handler.context.GRpcLogContextHandler
-import app.grpc.server.gen.task.*
+import app.grpc.server.gen.task.CreateTaskInbound
+import app.grpc.server.gen.task.FindTaskInbound
+import app.grpc.server.gen.task.GetTaskInbound
+import app.grpc.server.gen.task.TaskOutbound
+import app.grpc.server.gen.task.TaskServiceGrpc
+import app.grpc.server.gen.task.UpdateTaskInbound
 import app.grpc.validator.GRpcInboundValidator
 import app.service.CreateTaskCommand
 import app.service.DelegateTaskService
@@ -40,7 +45,7 @@ class TaskBackendServer(private val delegateTaskService: DelegateTaskService) : 
         return Timestamp.newBuilder().setSeconds(date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli())
     }
 
-    override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
+    override fun getTaskService(request: GetTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         val taskId = GRpcInboundValidator.validTaskInbound(request)
 
         val log = GRpcLogContextHandler.getLog()
@@ -52,7 +57,7 @@ class TaskBackendServer(private val delegateTaskService: DelegateTaskService) : 
         responseObserver?.onCompleted()
     }
 
-    override fun getTaskListService(request: TaskListInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
+    override fun findTaskService(request: FindTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         val (page) = GRpcInboundValidator.validTaskListInbound(request)
 
         val log = GRpcLogContextHandler.getLog()
@@ -90,7 +95,7 @@ class TaskBackendServer(private val delegateTaskService: DelegateTaskService) : 
         responseObserver?.onCompleted()
     }
 
-    override fun deleteTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
+    override fun deleteTaskService(request: GetTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         val taskId = GRpcInboundValidator.validTaskInbound(request)
 
         val log = GRpcLogContextHandler.getLog()
@@ -102,7 +107,7 @@ class TaskBackendServer(private val delegateTaskService: DelegateTaskService) : 
         responseObserver?.onCompleted()
     }
 
-    override fun finishTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
+    override fun finishTaskService(request: GetTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
         val taskId = GRpcInboundValidator.validTaskInbound(request)
 
         val log = GRpcLogContextHandler.getLog()

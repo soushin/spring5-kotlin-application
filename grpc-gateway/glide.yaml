@@ -1,0 +1,12 @@
+package: github.com/soushin/spring5-kotlin-application
+import:
+- package: google.golang.org/grpc
+  subpackages:
+  - credentials
+- package: github.com/grpc-ecosystem/grpc-gateway
+  subpackages:
+  - runtime
+- package: golang.org/x/net
+  subpackages:
+  - context
+- package: github.com/golang/glog

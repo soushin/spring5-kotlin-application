@@ -1,0 +1,67 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "app.grpc.server.gen.task";
+option java_outer_classname = "TaskServiceProto";
+option go_package = "task";
+
+package messages;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+service TaskService {
+    rpc GetTaskService (GetTaskInbound) returns (TaskOutbound) {
+        option (google.api.http) = {
+            post: "/grpcgateway/task"
+            body: "*"
+			};
+    }
+
+    rpc FindTaskService (FindTaskInbound) returns (stream TaskOutbound) {
+        option (google.api.http) = {
+            post: "/grpcgateway/tasks"
+            body: "*"
+			};
+    }
+
+    rpc CreateTaskService (CreateTaskInbound) returns (TaskOutbound) {
+    }
+
+    rpc UpdateTaskService (UpdateTaskInbound) returns (TaskOutbound) {
+    }
+
+    rpc DeleteTaskService (GetTaskInbound) returns (TaskOutbound) {
+    }
+
+    rpc FinishTaskService (GetTaskInbound) returns (TaskOutbound) {
+    }
+}
+
+message GetTaskInbound {
+    uint32 task_id = 1;
+}
+
+message FindTaskInbound {
+    google.protobuf.UInt32Value page = 1;
+}
+
+message CreateTaskInbound {
+    string title = 1;
+}
+
+message UpdateTaskInbound {
+    uint32 task_id = 1;
+    string title = 2;
+}
+
+message TaskOutbound {
+    uint32 task_id = 1;
+    string title = 2;
+    google.protobuf.Timestamp finishedAt = 3;
+    google.protobuf.Timestamp createdAt = 4;
+    google.protobuf.Timestamp updatedAt = 5;
+}
+
+

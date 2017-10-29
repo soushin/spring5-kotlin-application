@@ -24,7 +24,7 @@ class AppConfig {
     fun realDataSource(): DataSource {
         val dataSource = BasicDataSource()
         dataSource.driverClassName = "com.mysql.cj.jdbc.Driver"
-        dataSource.url = "jdbc:mysql://mysql:3306/todo?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_general_ci&useSSL=false"
+        dataSource.url = "jdbc:mysql://db:3306/todo?useUnicode=true&characterEncoding=UTF-8&connectionCollation=utf8mb4_general_ci&useSSL=false"
         dataSource.username = "root"
         dataSource.password = ""
         return dataSource

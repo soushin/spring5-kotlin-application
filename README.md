@@ -62,7 +62,7 @@ $ curl -XGET http://localhost:8080/api/tasks | jq
 
 Running docker containers.
 ```
-(spring5-kotlin-application) $ docker-compose up -d
+(spring5-kotlin-application) $ sh ./setup/sh
 ```
 After running docker containers, you can confirm api response via API of HTTP and gRPC client.
 
@@ -73,18 +73,13 @@ $ curl -XGET http://localhost:8080/api/task/1
   {"id":1,"title":"task title","finishedAt":"","createdAt":"2017-06-13T15:51:42Z","updatedAt":"2017-06-13T15:51:42Z"}%
 ```
 
-**via gRPC client**
-
-use grpc-gateway
+**via gRPC gateway**
 
 ```
-(spring5-kotlin-application/gateway) $ go get ./...
-(spring5-kotlin-application/gateway) $ go run gateway.go
+$ curl -XPOST \
+           http://localhost:8081/grpcgateway/task \
+           -H 'Content-type: application/json' \
+           -d '{"task_id": 1}'
+  {"task_id":1,"title":"task title","createdAt":"49797-04-11T09:50:00.000Z","updatedAt":"49797-04-11T09:50:00.000Z"}%
 ```
 
-then request to the grpc-client on api-server via grpc-gateway.
-
-```
-curl -XGET http://localhost:8081/v1/task?task_id=1
-{"task_id":1,"title":"task title"}%
-```

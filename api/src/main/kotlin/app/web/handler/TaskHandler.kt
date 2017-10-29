@@ -66,10 +66,11 @@ data class TaskModel(
     constructor(entity: TaskOutbound) : this(
             id = entity.taskId.toLong(),
             title = entity.title,
-            finishedAt = entity.finishedAt.let {
-                if (it != null)
-                    Instant.ofEpochMilli(it.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC)
-                else null
+            finishedAt = entity.hasFinishedAt().let {
+                if (it)
+                    Instant.ofEpochMilli(entity.finishedAt.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC)
+                else
+                    null
             },
             createdAt = Instant.ofEpochMilli(entity.createdAt.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC),
             updatedAt = Instant.ofEpochMilli(entity.updatedAt.seconds).atZone(ZoneId.systemDefault()).toLocalDateTime().convert(DateUtil.Format.FULL_UTC)

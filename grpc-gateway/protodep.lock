@@ -1,0 +1,6 @@
+proto_outdir = "./proto/soushin/spring5-kotlin-application/task"
+
+[[dependencies]]
+  target = "github.com/soushin/spring5-kotlin-application-proto"
+  revision = "6ebbf573a3bc5e53b8b42a9e8dc38b2d4449671a"
+  branch = "feature/update-proto"

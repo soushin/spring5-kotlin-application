@@ -2,4 +2,4 @@ proto_outdir = "./src/main/proto"
 
 [[dependencies]]
   target = "github.com/nsoushi/spring5-kotlin-application-proto/"
-  branch = "master"
+  branch = "feature/update-proto"
