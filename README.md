@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains the todo list application that implemented by Spring Boot 2.0.0.M1 (support kotlin).
+This repository contains the todo list application implemented by Spring Boot 2.0.0.M3 (support kotlin).
 
 ## Motivation
 
