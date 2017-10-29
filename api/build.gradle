@@ -170,7 +170,7 @@ protobuf {
 task cleanProtoGen{
     doFirst{
         delete("$projectDir/src/main/grpc")
-        delete("$projectDir/src/main/java/app/server")
+        delete("$projectDir/src/main/java/app/grpc")
     }
 }
 clean.dependsOn cleanProtoGen

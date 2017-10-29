@@ -13,7 +13,7 @@ class AppProperties {
     class Grpc {
         var server = Server()
         class Server {
-            var port = 50052
+            var port = 50051
             var host = "localhost"
         }
     }

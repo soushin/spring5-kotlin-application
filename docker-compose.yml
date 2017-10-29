@@ -6,7 +6,6 @@ services:
     build: ./api
     ports:
       - 8080:8080
-      - 50051:50051
     depends_on:
       - backend
 
@@ -14,11 +13,12 @@ services:
     container_name: backend_server
     build: ./backend
     ports:
-      - 50052:50052
+      - 50051:50051
     depends_on:
-      - mysql
+      - db
+    restart: unless-stopped
 
-  mysql:
+  db:
     container_name: mysql
     image: mysql:5.7
     ports:
@@ -29,3 +29,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  grpc-gateway:
+    container_name: grpc-gateway
+    build: ./grpc-gateway
+    ports:
+      - 8081:8081
+    environment:
+      ENDPOINT: backend:50051
+    depends_on:
+      - backend

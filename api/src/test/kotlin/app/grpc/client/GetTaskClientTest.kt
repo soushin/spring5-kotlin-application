@@ -2,7 +2,7 @@ package app.grpc.client
 
 import app.config.AppProperties
 import app.grpc.GrpcException
-import app.grpc.server.gen.task.TaskInbound
+import app.grpc.server.gen.task.GetTaskInbound
 import app.grpc.server.gen.task.TaskOutbound
 import app.grpc.server.gen.task.TaskServiceGrpc
 import app.util.DateUtil
@@ -60,7 +60,7 @@ class GetTaskClientTest {
 
     private class GetTaskServerOk : TaskServiceGrpc.TaskServiceImplBase() {
 
-        override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
+        override fun getTaskService(request: GetTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
             responseObserver?.onNext(TaskOutbound.newBuilder()
                     .setTaskId(1)
                     .setTitle("mocked Task")
@@ -113,7 +113,7 @@ class GetTaskClientTest {
 
     private class GetTaskServerNotFound : TaskServiceGrpc.TaskServiceImplBase() {
 
-        override fun getTaskService(request: TaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
+        override fun getTaskService(request: GetTaskInbound?, responseObserver: StreamObserver<TaskOutbound>?) {
             responseObserver?.onError(Status.NOT_FOUND.withDescription("task not found.").asRuntimeException())
             responseObserver?.onCompleted()
         }

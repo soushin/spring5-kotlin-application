@@ -19,7 +19,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
  */
 @javax.annotation.Generated(
     value = "by gRPC proto compiler (version 1.3.0)",
-    comments = "Source: github.com/nsoushi/spring5-kotlin-application-proto/task.proto")
+    comments = "Source: task.proto")
 public final class TaskServiceGrpc {
 
   private TaskServiceGrpc() {}
@@ -28,22 +28,22 @@ public final class TaskServiceGrpc {
 
   // Static method descriptors that strictly reflect the proto.
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.TaskInbound,
+  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.GetTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_GET_TASK_SERVICE =
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.UNARY,
           generateFullMethodName(
               "messages.TaskService", "GetTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskInbound.getDefaultInstance()),
+          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()),
           io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.TaskListInbound,
-      app.grpc.server.gen.task.TaskOutbound> METHOD_GET_TASK_LIST_SERVICE =
+  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.FindTaskInbound,
+      app.grpc.server.gen.task.TaskOutbound> METHOD_FIND_TASK_SERVICE =
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING,
           generateFullMethodName(
-              "messages.TaskService", "GetTaskListService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskListInbound.getDefaultInstance()),
+              "messages.TaskService", "FindTaskService"),
+          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.FindTaskInbound.getDefaultInstance()),
           io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.CreateTaskInbound,
@@ -64,22 +64,22 @@ public final class TaskServiceGrpc {
           io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.UpdateTaskInbound.getDefaultInstance()),
           io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.TaskInbound,
+  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.GetTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_DELETE_TASK_SERVICE =
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.UNARY,
           generateFullMethodName(
               "messages.TaskService", "DeleteTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskInbound.getDefaultInstance()),
+          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()),
           io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
-  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.TaskInbound,
+  public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.GetTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_FINISH_TASK_SERVICE =
       io.grpc.MethodDescriptor.create(
           io.grpc.MethodDescriptor.MethodType.UNARY,
           generateFullMethodName(
               "messages.TaskService", "FinishTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskInbound.getDefaultInstance()),
+          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()),
           io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
 
   /**
@@ -111,16 +111,16 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public void getTaskService(app.grpc.server.gen.task.TaskInbound request,
+    public void getTaskService(app.grpc.server.gen.task.GetTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_GET_TASK_SERVICE, responseObserver);
     }
 
     /**
      */
-    public void getTaskListService(app.grpc.server.gen.task.TaskListInbound request,
+    public void findTaskService(app.grpc.server.gen.task.FindTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
-      asyncUnimplementedUnaryCall(METHOD_GET_TASK_LIST_SERVICE, responseObserver);
+      asyncUnimplementedUnaryCall(METHOD_FIND_TASK_SERVICE, responseObserver);
     }
 
     /**
@@ -139,14 +139,14 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public void deleteTaskService(app.grpc.server.gen.task.TaskInbound request,
+    public void deleteTaskService(app.grpc.server.gen.task.GetTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_DELETE_TASK_SERVICE, responseObserver);
     }
 
     /**
      */
-    public void finishTaskService(app.grpc.server.gen.task.TaskInbound request,
+    public void finishTaskService(app.grpc.server.gen.task.GetTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncUnimplementedUnaryCall(METHOD_FINISH_TASK_SERVICE, responseObserver);
     }
@@ -157,16 +157,16 @@ public final class TaskServiceGrpc {
             METHOD_GET_TASK_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
-                app.grpc.server.gen.task.TaskInbound,
+                app.grpc.server.gen.task.GetTaskInbound,
                 app.grpc.server.gen.task.TaskOutbound>(
                   this, METHODID_GET_TASK_SERVICE)))
           .addMethod(
-            METHOD_GET_TASK_LIST_SERVICE,
+            METHOD_FIND_TASK_SERVICE,
             asyncServerStreamingCall(
               new MethodHandlers<
-                app.grpc.server.gen.task.TaskListInbound,
+                app.grpc.server.gen.task.FindTaskInbound,
                 app.grpc.server.gen.task.TaskOutbound>(
-                  this, METHODID_GET_TASK_LIST_SERVICE)))
+                  this, METHODID_FIND_TASK_SERVICE)))
           .addMethod(
             METHOD_CREATE_TASK_SERVICE,
             asyncUnaryCall(
@@ -185,14 +185,14 @@ public final class TaskServiceGrpc {
             METHOD_DELETE_TASK_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
-                app.grpc.server.gen.task.TaskInbound,
+                app.grpc.server.gen.task.GetTaskInbound,
                 app.grpc.server.gen.task.TaskOutbound>(
                   this, METHODID_DELETE_TASK_SERVICE)))
           .addMethod(
             METHOD_FINISH_TASK_SERVICE,
             asyncUnaryCall(
               new MethodHandlers<
-                app.grpc.server.gen.task.TaskInbound,
+                app.grpc.server.gen.task.GetTaskInbound,
                 app.grpc.server.gen.task.TaskOutbound>(
                   this, METHODID_FINISH_TASK_SERVICE)))
           .build();
@@ -219,7 +219,7 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public void getTaskService(app.grpc.server.gen.task.TaskInbound request,
+    public void getTaskService(app.grpc.server.gen.task.GetTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_GET_TASK_SERVICE, getCallOptions()), request, responseObserver);
@@ -227,10 +227,10 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public void getTaskListService(app.grpc.server.gen.task.TaskListInbound request,
+    public void findTaskService(app.grpc.server.gen.task.FindTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncServerStreamingCall(
-          getChannel().newCall(METHOD_GET_TASK_LIST_SERVICE, getCallOptions()), request, responseObserver);
+          getChannel().newCall(METHOD_FIND_TASK_SERVICE, getCallOptions()), request, responseObserver);
     }
 
     /**
@@ -251,7 +251,7 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public void deleteTaskService(app.grpc.server.gen.task.TaskInbound request,
+    public void deleteTaskService(app.grpc.server.gen.task.GetTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_DELETE_TASK_SERVICE, getCallOptions()), request, responseObserver);
@@ -259,7 +259,7 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public void finishTaskService(app.grpc.server.gen.task.TaskInbound request,
+    public void finishTaskService(app.grpc.server.gen.task.GetTaskInbound request,
         io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound> responseObserver) {
       asyncUnaryCall(
           getChannel().newCall(METHOD_FINISH_TASK_SERVICE, getCallOptions()), request, responseObserver);
@@ -286,17 +286,17 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public app.grpc.server.gen.task.TaskOutbound getTaskService(app.grpc.server.gen.task.TaskInbound request) {
+    public app.grpc.server.gen.task.TaskOutbound getTaskService(app.grpc.server.gen.task.GetTaskInbound request) {
       return blockingUnaryCall(
           getChannel(), METHOD_GET_TASK_SERVICE, getCallOptions(), request);
     }
 
     /**
      */
-    public java.util.Iterator<app.grpc.server.gen.task.TaskOutbound> getTaskListService(
-        app.grpc.server.gen.task.TaskListInbound request) {
+    public java.util.Iterator<app.grpc.server.gen.task.TaskOutbound> findTaskService(
+        app.grpc.server.gen.task.FindTaskInbound request) {
       return blockingServerStreamingCall(
-          getChannel(), METHOD_GET_TASK_LIST_SERVICE, getCallOptions(), request);
+          getChannel(), METHOD_FIND_TASK_SERVICE, getCallOptions(), request);
     }
 
     /**
@@ -315,14 +315,14 @@ public final class TaskServiceGrpc {
 
     /**
      */
-    public app.grpc.server.gen.task.TaskOutbound deleteTaskService(app.grpc.server.gen.task.TaskInbound request) {
+    public app.grpc.server.gen.task.TaskOutbound deleteTaskService(app.grpc.server.gen.task.GetTaskInbound request) {
       return blockingUnaryCall(
           getChannel(), METHOD_DELETE_TASK_SERVICE, getCallOptions(), request);
     }
 
     /**
      */
-    public app.grpc.server.gen.task.TaskOutbound finishTaskService(app.grpc.server.gen.task.TaskInbound request) {
+    public app.grpc.server.gen.task.TaskOutbound finishTaskService(app.grpc.server.gen.task.GetTaskInbound request) {
       return blockingUnaryCall(
           getChannel(), METHOD_FINISH_TASK_SERVICE, getCallOptions(), request);
     }
@@ -349,7 +349,7 @@ public final class TaskServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<app.grpc.server.gen.task.TaskOutbound> getTaskService(
-        app.grpc.server.gen.task.TaskInbound request) {
+        app.grpc.server.gen.task.GetTaskInbound request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_GET_TASK_SERVICE, getCallOptions()), request);
     }
@@ -373,7 +373,7 @@ public final class TaskServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<app.grpc.server.gen.task.TaskOutbound> deleteTaskService(
-        app.grpc.server.gen.task.TaskInbound request) {
+        app.grpc.server.gen.task.GetTaskInbound request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_DELETE_TASK_SERVICE, getCallOptions()), request);
     }
@@ -381,14 +381,14 @@ public final class TaskServiceGrpc {
     /**
      */
     public com.google.common.util.concurrent.ListenableFuture<app.grpc.server.gen.task.TaskOutbound> finishTaskService(
-        app.grpc.server.gen.task.TaskInbound request) {
+        app.grpc.server.gen.task.GetTaskInbound request) {
       return futureUnaryCall(
           getChannel().newCall(METHOD_FINISH_TASK_SERVICE, getCallOptions()), request);
     }
   }
 
   private static final int METHODID_GET_TASK_SERVICE = 0;
-  private static final int METHODID_GET_TASK_LIST_SERVICE = 1;
+  private static final int METHODID_FIND_TASK_SERVICE = 1;
   private static final int METHODID_CREATE_TASK_SERVICE = 2;
   private static final int METHODID_UPDATE_TASK_SERVICE = 3;
   private static final int METHODID_DELETE_TASK_SERVICE = 4;
@@ -412,11 +412,11 @@ public final class TaskServiceGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_TASK_SERVICE:
-          serviceImpl.getTaskService((app.grpc.server.gen.task.TaskInbound) request,
+          serviceImpl.getTaskService((app.grpc.server.gen.task.GetTaskInbound) request,
               (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound>) responseObserver);
           break;
-        case METHODID_GET_TASK_LIST_SERVICE:
-          serviceImpl.getTaskListService((app.grpc.server.gen.task.TaskListInbound) request,
+        case METHODID_FIND_TASK_SERVICE:
+          serviceImpl.findTaskService((app.grpc.server.gen.task.FindTaskInbound) request,
               (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound>) responseObserver);
           break;
         case METHODID_CREATE_TASK_SERVICE:
@@ -428,11 +428,11 @@ public final class TaskServiceGrpc {
               (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound>) responseObserver);
           break;
         case METHODID_DELETE_TASK_SERVICE:
-          serviceImpl.deleteTaskService((app.grpc.server.gen.task.TaskInbound) request,
+          serviceImpl.deleteTaskService((app.grpc.server.gen.task.GetTaskInbound) request,
               (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound>) responseObserver);
           break;
         case METHODID_FINISH_TASK_SERVICE:
-          serviceImpl.finishTaskService((app.grpc.server.gen.task.TaskInbound) request,
+          serviceImpl.finishTaskService((app.grpc.server.gen.task.GetTaskInbound) request,
               (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound>) responseObserver);
           break;
         default:
@@ -469,7 +469,7 @@ public final class TaskServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new TaskServiceDescriptorSupplier())
               .addMethod(METHOD_GET_TASK_SERVICE)
-              .addMethod(METHOD_GET_TASK_LIST_SERVICE)
+              .addMethod(METHOD_FIND_TASK_SERVICE)
               .addMethod(METHOD_CREATE_TASK_SERVICE)
               .addMethod(METHOD_UPDATE_TASK_SERVICE)
               .addMethod(METHOD_DELETE_TASK_SERVICE)

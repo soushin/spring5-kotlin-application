@@ -2,8 +2,8 @@ package app.grpc.validator
 
 import app.WebAppException.BadRequestException
 import app.grpc.server.gen.task.CreateTaskInbound
-import app.grpc.server.gen.task.TaskInbound
-import app.grpc.server.gen.task.TaskListInbound
+import app.grpc.server.gen.task.FindTaskInbound
+import app.grpc.server.gen.task.GetTaskInbound
 import app.grpc.server.gen.task.UpdateTaskInbound
 import mu.KotlinLogging
 
@@ -16,7 +16,7 @@ object GRpcInboundValidator {
     private val logger = KotlinLogging.logger {}
     private val DEFAULT_PAGE_LIMIT = 10
 
-    fun validTaskInbound(request: TaskInbound?): String {
+    fun validTaskInbound(request: GetTaskInbound?): String {
 
         request ?: throw BadRequestException("invalid request")
 
@@ -28,7 +28,7 @@ object GRpcInboundValidator {
         return taskId
     }
 
-    fun validTaskListInbound(request: TaskListInbound?): Array<String> {
+    fun validTaskListInbound(request: FindTaskInbound?): Array<String> {
 
         request ?: throw BadRequestException("invalid request")
 

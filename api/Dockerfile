@@ -1,6 +1,6 @@
 FROM java:openjdk-8
 
-COPY . /api-server
+COPY ./build/libs/app.api.jar /api-server/app.api.jar
 
 ENV ORG_GRADLE_PROJECT_IGNORE_PROTO_DEP=true
 
@@ -11,13 +11,10 @@ RUN apt-get update && \
     rm -rf /etc/localtime && \
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     \
-    cd /api-server && ./gradlew clean && \
-    cd /api-server && rm -rf ~/.gradle && ./gradlew clean generateProto build -x test && \
     mkdir -p /usr/local/api-server/lib && \
-    cp -R /api-server/build/libs/* /usr/local/api-server/lib/ && \
+    cp -R /api-server/app.api.jar /usr/local/api-server/lib/app.api.jar && \
     rm -rf /api-server
 
 ENTRYPOINT java $JAVA_OPTS -jar /usr/local/api-server/lib/app.api.jar
 
 EXPOSE 8080 8080
-EXPOSE 50051 50051

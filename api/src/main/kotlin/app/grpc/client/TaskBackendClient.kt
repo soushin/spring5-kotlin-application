@@ -25,7 +25,7 @@ class TaskBackendClient(private val appProperties: AppProperties) {
             async(CommonPool) {
                 try {
                     val outbound = ShutdownLoan.using(getChannel(), { channel ->
-                        val msg = TaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
+                        val msg = GetTaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
                         TaskServiceGrpc.newBlockingStub(channel).getTaskService(msg)
                     })
                     Result.Success<TaskOutbound, GrpcException>(outbound)
@@ -40,8 +40,8 @@ class TaskBackendClient(private val appProperties: AppProperties) {
             async(CommonPool) {
                 try {
                     val outbound = ShutdownLoan.using(getChannel(), { channel ->
-                        val msg = TaskListInbound.newBuilder().setPage(UInt32Value.newBuilder().setValue(10).build()).build()
-                        TaskServiceGrpc.newBlockingStub(channel).getTaskListService(msg).asSequence().map { it }.toList()
+                        val msg = FindTaskInbound.newBuilder().setPage(UInt32Value.newBuilder().setValue(10).build()).build()
+                        TaskServiceGrpc.newBlockingStub(channel).findTaskService(msg).asSequence().map { it }.toList()
                     })
                     Result.Success<List<TaskOutbound>, GrpcException>(outbound)
                 } catch (e: Exception) {
@@ -78,7 +78,7 @@ class TaskBackendClient(private val appProperties: AppProperties) {
     fun deleteTask(id: Long): TaskOutbound =
             try {
                 ShutdownLoan.using(getChannel(), { channel ->
-                    val msg = TaskInbound.newBuilder().setTaskId(id.toInt()).build()
+                    val msg = GetTaskInbound.newBuilder().setTaskId(id.toInt()).build()
                     TaskServiceGrpc.newBlockingStub(channel).deleteTaskService(msg)
                 })
             } catch (e: Exception) {
@@ -90,7 +90,7 @@ class TaskBackendClient(private val appProperties: AppProperties) {
     fun finishTask(id: Long): TaskOutbound =
             try {
                 ShutdownLoan.using(getChannel(), { channel ->
-                    val msg = TaskInbound.newBuilder().setTaskId(id.toInt()).build()
+                    val msg = GetTaskInbound.newBuilder().setTaskId(id.toInt()).build()
                     TaskServiceGrpc.newBlockingStub(channel).finishTaskService(msg)
                 })
             } catch (e: Exception) {

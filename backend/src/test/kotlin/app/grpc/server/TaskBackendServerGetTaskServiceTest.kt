@@ -5,17 +5,11 @@ import app.entity.Task
 import app.grpc.handler.context.GRpcLogContextHandler
 import app.grpc.handler.log.GRpcLogBuilder
 import app.grpc.interceptor.ExceptionFilter
-import app.grpc.server.gen.task.TaskInbound
+import app.grpc.server.gen.task.GetTaskInbound
 import app.grpc.server.gen.task.TaskOutbound
 import app.grpc.server.gen.task.TaskServiceGrpc
-import app.service.CreateTaskService
 import app.service.DelegateTaskService
-import app.service.DeleteTaskService
-import app.service.FindTaskService
-import app.service.FinishTaskService
 import app.service.GetTaskCommand
-import app.service.GetTaskService
-import app.service.UpdateTaskService
 import io.grpc.ManagedChannel
 import io.grpc.Metadata
 import io.grpc.Server
@@ -87,7 +81,7 @@ class TaskBackendServerGetTaskServiceTest {
     fun getProducts_onCompleted() {
 
         val taskId = 1L
-        val request = TaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
+        val request = GetTaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
 
         val command = GetTaskCommand(taskId)
         val now = LocalDateTime.now()
@@ -111,7 +105,7 @@ class TaskBackendServerGetTaskServiceTest {
     fun getProducts_NOT_FOUND() {
 
         val taskId = 1L
-        val request = TaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
+        val request = GetTaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
 
         val command = GetTaskCommand(taskId)
 
@@ -130,9 +124,9 @@ class TaskBackendServerGetTaskServiceTest {
             e.message shouldBe "NOT_FOUND: not found"
 
             Mockito.verify(mockServerInterceptor).interceptCall(
-                    MockHelper.any<ServerCall<TaskInbound, TaskOutbound>>(),
+                    MockHelper.any<ServerCall<GetTaskInbound, TaskOutbound>>(),
                     metadataCaptor.capture(),
-                    MockHelper.any<ServerCallHandler<TaskInbound, TaskOutbound>>())
+                    MockHelper.any<ServerCallHandler<GetTaskInbound, TaskOutbound>>())
             metadataCaptor.value.get(
                     Metadata.Key.of("custom_status", Metadata.ASCII_STRING_MARSHALLER)) shouldBe "404"
         }
@@ -142,7 +136,7 @@ class TaskBackendServerGetTaskServiceTest {
     fun getProducts_INVALID_ARGUMENT() {
 
         val taskId = 0L
-        val request = TaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
+        val request = GetTaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
 
         try {
             // request server

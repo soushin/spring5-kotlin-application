@@ -1,6 +1,7 @@
 FROM java:openjdk-8
 
-COPY . /api-server
+COPY ./build/libs/app.backend.jar /api-server/app.backend.jar
+COPY ./entrypoint.sh /entrypoint.sh
 
 ENV ORG_GRADLE_PROJECT_IGNORE_PROTO_DEP=true
 
@@ -11,12 +12,10 @@ RUN apt-get update && \
     rm -rf /etc/localtime && \
     ln -sf /usr/share/zoneinfo/Asia/Tokyo /etc/localtime && \
     \
-    cd /api-server && ./gradlew clean && \
-    cd /api-server && rm -rf ~/.gradle && ./gradlew clean generateProto build -x test && \
     mkdir -p /usr/local/api-server/lib && \
-    cp -R /api-server/build/libs/* /usr/local/api-server/lib/ && \
+    cp -R /api-server/app.backend.jar /usr/local/api-server/lib/app.backend.jar && \
     rm -rf /api-server
 
-ENTRYPOINT java $JAVA_OPTS -jar /usr/local/api-server/lib/app.backend.jar
+ENTRYPOINT ["/entrypoint.sh"]
 
-EXPOSE 50052 50052
+EXPOSE 50051 50051
