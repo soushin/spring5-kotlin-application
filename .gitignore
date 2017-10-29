@@ -3,6 +3,7 @@
 build/
 backend/out/
 api/out/
+grpc-gateway/bin/grpc-gateway
 
 # Ignore Gradle GUI config
 gradle-app.setting
