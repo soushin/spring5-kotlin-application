@@ -18,7 +18,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 /**
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.3.0)",
+    value = "by gRPC proto compiler (version 1.7.1)",
     comments = "Source: echo.proto")
 public final class EchoServiceGrpc {
 
@@ -30,12 +30,16 @@ public final class EchoServiceGrpc {
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.echo.EchoMessage,
       app.grpc.server.gen.echo.EchoMessage> METHOD_ECHO_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.UNARY,
-          generateFullMethodName(
-              "messages.EchoService", "EchoService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.echo.EchoMessage.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.echo.EchoMessage.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.echo.EchoMessage, app.grpc.server.gen.echo.EchoMessage>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.EchoService", "EchoService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.echo.EchoMessage.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.echo.EchoMessage.getDefaultInstance()))
+          .setSchemaDescriptor(new EchoServiceMethodDescriptorSupplier("EchoService"))
+          .build();
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -53,7 +57,7 @@ public final class EchoServiceGrpc {
   }
 
   /**
-   * Creates a new ListenableFuture-style stub that supports unary and streaming output calls on the service
+   * Creates a new ListenableFuture-style stub that supports unary calls on the service
    */
   public static EchoServiceFutureStub newFutureStub(
       io.grpc.Channel channel) {
@@ -203,10 +207,38 @@ public final class EchoServiceGrpc {
     }
   }
 
-  private static final class EchoServiceDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
+  private static abstract class EchoServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+    EchoServiceBaseDescriptorSupplier() {}
+
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
       return app.grpc.server.gen.echo.EchoServiceProto.getDescriptor();
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
+      return getFileDescriptor().findServiceByName("EchoService");
+    }
+  }
+
+  private static final class EchoServiceFileDescriptorSupplier
+      extends EchoServiceBaseDescriptorSupplier {
+    EchoServiceFileDescriptorSupplier() {}
+  }
+
+  private static final class EchoServiceMethodDescriptorSupplier
+      extends EchoServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+    private final String methodName;
+
+    EchoServiceMethodDescriptorSupplier(String methodName) {
+      this.methodName = methodName;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+      return getServiceDescriptor().findMethodByName(methodName);
     }
   }
 
@@ -219,7 +251,7 @@ public final class EchoServiceGrpc {
         result = serviceDescriptor;
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
-              .setSchemaDescriptor(new EchoServiceDescriptorSupplier())
+              .setSchemaDescriptor(new EchoServiceFileDescriptorSupplier())
               .addMethod(METHOD_ECHO_SERVICE)
               .build();
         }
