@@ -18,7 +18,7 @@ import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 /**
  */
 @javax.annotation.Generated(
-    value = "by gRPC proto compiler (version 1.3.0)",
+    value = "by gRPC proto compiler (version 1.7.1)",
     comments = "Source: task.proto")
 public final class TaskServiceGrpc {
 
@@ -30,57 +30,81 @@ public final class TaskServiceGrpc {
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.GetTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_GET_TASK_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.UNARY,
-          generateFullMethodName(
-              "messages.TaskService", "GetTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.task.GetTaskInbound, app.grpc.server.gen.task.TaskOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "GetTaskService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("GetTaskService"))
+          .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.FindTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_FIND_TASK_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING,
-          generateFullMethodName(
-              "messages.TaskService", "FindTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.FindTaskInbound.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.task.FindTaskInbound, app.grpc.server.gen.task.TaskOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "FindTaskService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.FindTaskInbound.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("FindTaskService"))
+          .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.CreateTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_CREATE_TASK_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.UNARY,
-          generateFullMethodName(
-              "messages.TaskService", "CreateTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.CreateTaskInbound.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.task.CreateTaskInbound, app.grpc.server.gen.task.TaskOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "CreateTaskService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.CreateTaskInbound.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("CreateTaskService"))
+          .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.UpdateTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_UPDATE_TASK_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.UNARY,
-          generateFullMethodName(
-              "messages.TaskService", "UpdateTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.UpdateTaskInbound.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.task.UpdateTaskInbound, app.grpc.server.gen.task.TaskOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "UpdateTaskService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.UpdateTaskInbound.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("UpdateTaskService"))
+          .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.GetTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_DELETE_TASK_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.UNARY,
-          generateFullMethodName(
-              "messages.TaskService", "DeleteTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.task.GetTaskInbound, app.grpc.server.gen.task.TaskOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "DeleteTaskService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("DeleteTaskService"))
+          .build();
   @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
   public static final io.grpc.MethodDescriptor<app.grpc.server.gen.task.GetTaskInbound,
       app.grpc.server.gen.task.TaskOutbound> METHOD_FINISH_TASK_SERVICE =
-      io.grpc.MethodDescriptor.create(
-          io.grpc.MethodDescriptor.MethodType.UNARY,
-          generateFullMethodName(
-              "messages.TaskService", "FinishTaskService"),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()),
-          io.grpc.protobuf.ProtoUtils.marshaller(app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()));
+      io.grpc.MethodDescriptor.<app.grpc.server.gen.task.GetTaskInbound, app.grpc.server.gen.task.TaskOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "FinishTaskService"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.GetTaskInbound.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("FinishTaskService"))
+          .build();
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -98,7 +122,7 @@ public final class TaskServiceGrpc {
   }
 
   /**
-   * Creates a new ListenableFuture-style stub that supports unary and streaming output calls on the service
+   * Creates a new ListenableFuture-style stub that supports unary calls on the service
    */
   public static TaskServiceFutureStub newFutureStub(
       io.grpc.Channel channel) {
@@ -451,10 +475,38 @@ public final class TaskServiceGrpc {
     }
   }
 
-  private static final class TaskServiceDescriptorSupplier implements io.grpc.protobuf.ProtoFileDescriptorSupplier {
+  private static abstract class TaskServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoFileDescriptorSupplier, io.grpc.protobuf.ProtoServiceDescriptorSupplier {
+    TaskServiceBaseDescriptorSupplier() {}
+
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
       return app.grpc.server.gen.task.TaskServiceProto.getDescriptor();
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.ServiceDescriptor getServiceDescriptor() {
+      return getFileDescriptor().findServiceByName("TaskService");
+    }
+  }
+
+  private static final class TaskServiceFileDescriptorSupplier
+      extends TaskServiceBaseDescriptorSupplier {
+    TaskServiceFileDescriptorSupplier() {}
+  }
+
+  private static final class TaskServiceMethodDescriptorSupplier
+      extends TaskServiceBaseDescriptorSupplier
+      implements io.grpc.protobuf.ProtoMethodDescriptorSupplier {
+    private final String methodName;
+
+    TaskServiceMethodDescriptorSupplier(String methodName) {
+      this.methodName = methodName;
+    }
+
+    @java.lang.Override
+    public com.google.protobuf.Descriptors.MethodDescriptor getMethodDescriptor() {
+      return getServiceDescriptor().findMethodByName(methodName);
     }
   }
 
@@ -467,7 +519,7 @@ public final class TaskServiceGrpc {
         result = serviceDescriptor;
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
-              .setSchemaDescriptor(new TaskServiceDescriptorSupplier())
+              .setSchemaDescriptor(new TaskServiceFileDescriptorSupplier())
               .addMethod(METHOD_GET_TASK_SERVICE)
               .addMethod(METHOD_FIND_TASK_SERVICE)
               .addMethod(METHOD_CREATE_TASK_SERVICE)
