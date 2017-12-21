@@ -9,7 +9,7 @@ This repository contains the todo list application implemented by Spring Boot 2.
 HTTP routing service and gRPC clinet both applications are able to run on Spring Framework 5.0 ? I want to know that.  
 So that this repository of applicaiton developed according to following diagram.
 
-![diagram](https://raw.githubusercontent.com/nsoushi/spring5-kotlin-application/master/docs/spring5-kotlin.png)
+![diagram](https://raw.githubusercontent.com/soushin/spring5-kotlin-application/master/docs/spring5-kotlin.png)
 
 ## Apis
 
