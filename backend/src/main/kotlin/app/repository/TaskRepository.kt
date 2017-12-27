@@ -21,29 +21,29 @@ class TaskRepository(val dao: TaskDao) {
 
     fun findMany(): Result<List<Task>, RepositoryException> {
         val entities = dao.selectAll()
-        if (entities.isEmpty()) return Result.Failure(RepositoryException.NotFoundException("token not found"))
+        if (entities.isEmpty()) return Result.Failure(RepositoryException.NotFoundException("task not found"))
         return Result.Success(entities)
     }
 
     fun findOneById(id: Long): Result<Task, RepositoryException> {
-        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("token not found"))
+        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("task not found"))
         return Result.Success(entity)
     }
 
     fun updateById(id: Long, title: String): Result<Task, RepositoryException> {
-        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("token not found"))
+        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("task not found"))
         val result = dao.update(entity.copy(title = title, updatedAt = LocalDateTime.now()))
         return Result.Success(result.entity)
     }
 
     fun deleteById(id: Long): Result<Task, RepositoryException> {
-        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("token not found"))
+        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("task not found"))
         dao.delete(entity)
         return Result.Success(entity)
     }
 
     fun finishById(id: Long): Result<Task, RepositoryException> {
-        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("token not found"))
+        val entity = dao.selectById(id) ?: return Result.Failure(RepositoryException.NotFoundException("task not found"))
         val now = LocalDateTime.now()
         val result = dao.update(entity.copy(finishedAt = now, updatedAt = now))
         return Result.Success(result.entity)
