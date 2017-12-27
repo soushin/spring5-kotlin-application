@@ -19,7 +19,7 @@ import reactor.core.publisher.Mono
  * @author nsoushi
  */
 @Configuration
-class TaskRoutes(private val taskHandler: TaskHandler, private val exceptionFilter: ExceptionFilter) {
+class TaskRoutes(private val taskHandler: TaskHandler) {
 
     @Bean
     fun taskRouter() = router {
@@ -33,26 +33,6 @@ class TaskRoutes(private val taskHandler: TaskHandler, private val exceptionFilt
             }
             "/tasks".nest {
                 GET("/", taskHandler::fetchAll)
-            }
-        }
-    }.filter(exceptionFilter())
-}
-
-@Component
-class ExceptionFilter {
-
-    private val logger = KotlinLogging.logger {}
-
-    operator fun invoke(): (request: ServerRequest, next: HandlerFunction<ServerResponse>) -> Mono<ServerResponse> = { request, next ->
-        try {
-            next.handle(request)
-        } catch (e: Exception) {
-            when (e) {
-                is SystemException -> status(e.status).json().body(Mono.just(ErrorItem(e.message ?: "web application error", e.status.value().toString(), null)))
-                else -> {
-                    logger.error(e) { "unknown exception: %s".format(e.message ?: "unknown error") }
-                    status(HttpStatus.INTERNAL_SERVER_ERROR).json().body(Mono.just(ErrorItem(e.message ?: "internal server error", null, null)))
-                }
             }
         }
     }
