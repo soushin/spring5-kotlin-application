@@ -2,7 +2,7 @@ group 'app.api'
 
 buildscript {
     ext.kotlin_version = '1.2.10'
-    ext.springboot_version = "2.0.0.M7"
+    ext.springboot_version = "2.0.5.RELEASE"
     ext.grpc_version = "1.7.1"
     ext.kotlin_coroutine_version = "0.16"
 
