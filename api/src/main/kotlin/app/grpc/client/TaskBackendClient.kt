@@ -5,6 +5,7 @@ import app.grpc.GrpcException
 import app.grpc.GrpcException.Companion.with
 import app.grpc.server.gen.task.*
 import com.github.kittinunf.result.Result
+import com.google.protobuf.Empty
 import com.google.protobuf.UInt32Value
 import io.grpc.Status
 import io.grpc.netty.NettyChannelBuilder
@@ -24,10 +25,10 @@ class TaskBackendClient(private val appProperties: AppProperties) {
     suspend fun getTask(taskId: Long): TaskOutbound =
             async(CommonPool) {
                 try {
-                    val outbound = ShutdownLoan.using(getChannel(), { channel ->
+                    val outbound = ShutdownLoan.using(getChannel()) { channel ->
                         val msg = GetTaskInbound.newBuilder().setTaskId(taskId.toInt()).build()
                         TaskServiceGrpc.newBlockingStub(channel).getTaskService(msg)
-                    })
+                    }
                     Result.Success<TaskOutbound, GrpcException>(outbound)
                 } catch (e: Exception) {
                     val status = Status.fromThrowable(e)
@@ -39,10 +40,10 @@ class TaskBackendClient(private val appProperties: AppProperties) {
     suspend fun getTaskList(): List<TaskOutbound> =
             async(CommonPool) {
                 try {
-                    val outbound = ShutdownLoan.using(getChannel(), { channel ->
+                    val outbound = ShutdownLoan.using(getChannel()) { channel ->
                         val msg = FindTaskInbound.newBuilder().setPage(UInt32Value.newBuilder().setValue(10).build()).build()
                         TaskServiceGrpc.newBlockingStub(channel).findTaskService(msg).asSequence().map { it }.toList()
-                    })
+                    }
                     Result.Success<List<TaskOutbound>, GrpcException>(outbound)
                 } catch (e: Exception) {
                     val status = Status.fromThrowable(e)
@@ -53,10 +54,10 @@ class TaskBackendClient(private val appProperties: AppProperties) {
 
     fun createTask(title: String): TaskOutbound =
             try {
-                ShutdownLoan.using(getChannel(), { channel ->
+                ShutdownLoan.using(getChannel()) { channel ->
                     val msg = CreateTaskInbound.newBuilder().setTitle(title).build()
                     TaskServiceGrpc.newBlockingStub(channel).createTaskService(msg)
-                })
+                }
             } catch (e: Exception) {
                 val status = Status.fromThrowable(e)
                 logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }
@@ -65,10 +66,10 @@ class TaskBackendClient(private val appProperties: AppProperties) {
 
     fun updateTask(id: Long, title: String): TaskOutbound =
             try {
-                ShutdownLoan.using(getChannel(), { channel ->
+                ShutdownLoan.using(getChannel()) { channel ->
                     val msg = UpdateTaskInbound.newBuilder().setTaskId(id.toInt()).setTitle(title).build()
                     TaskServiceGrpc.newBlockingStub(channel).updateTaskService(msg)
-                })
+                }
             } catch (e: Exception) {
                 val status = Status.fromThrowable(e)
                 logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }
@@ -77,10 +78,10 @@ class TaskBackendClient(private val appProperties: AppProperties) {
 
     fun deleteTask(id: Long): TaskOutbound =
             try {
-                ShutdownLoan.using(getChannel(), { channel ->
+                ShutdownLoan.using(getChannel()) { channel ->
                     val msg = GetTaskInbound.newBuilder().setTaskId(id.toInt()).build()
                     TaskServiceGrpc.newBlockingStub(channel).deleteTaskService(msg)
-                })
+                }
             } catch (e: Exception) {
                 val status = Status.fromThrowable(e)
                 logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }
@@ -89,10 +90,23 @@ class TaskBackendClient(private val appProperties: AppProperties) {
 
     fun finishTask(id: Long): TaskOutbound =
             try {
-                ShutdownLoan.using(getChannel(), { channel ->
+                ShutdownLoan.using(getChannel()) { channel ->
                     val msg = GetTaskInbound.newBuilder().setTaskId(id.toInt()).build()
                     TaskServiceGrpc.newBlockingStub(channel).finishTaskService(msg)
-                })
+                }
+            } catch (e: Exception) {
+                val status = Status.fromThrowable(e)
+                logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }
+                throw status with status.description
+            }
+
+    fun getTaskCount(): TaskCountOutbound =
+            try {
+                ShutdownLoan.using(getChannel()) { channel ->
+                    Empty.newBuilder().build().let {
+                        TaskServiceGrpc.newBlockingStub(channel).getTaskCount(it)
+                    }
+                }
             } catch (e: Exception) {
                 val status = Status.fromThrowable(e)
                 logger.error(e) { "gRPC server error, code:{%d}, description:{%s}".format(status.code.value(), status.description) }

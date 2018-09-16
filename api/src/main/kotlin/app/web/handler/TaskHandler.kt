@@ -5,12 +5,15 @@ import app.convert
 import app.grpc.client.TaskBackendClient
 import app.grpc.server.gen.task.TaskOutbound
 import app.json
+import app.service.TaskService
 import app.util.DateUtil
 import kotlinx.coroutines.experimental.runBlocking
 import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
 import org.springframework.web.reactive.function.server.ServerResponse.*
+import org.springframework.web.reactive.function.server.bodyToServerSentEvents
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import java.time.Instant
@@ -21,7 +24,8 @@ import java.time.ZoneId
  * @author nsoushi
  */
 @Component
-class TaskHandler(private val taskBackendClient: TaskBackendClient) {
+class TaskHandler(private val taskBackendClient: TaskBackendClient,
+                  private val taskService: TaskService) {
 
     fun fetchByTaskId(req: ServerRequest) = ok().json().body(
             runBlocking {
@@ -33,23 +37,37 @@ class TaskHandler(private val taskBackendClient: TaskBackendClient) {
                 taskBackendClient.getTaskList().map(::TaskModel)
             }))
 
-    fun create(req: ServerRequest) = ok().json().body(
-            req.bodyToFlux(CreateTaskInbound::class.java).doOnNext {
-                p ->
-                TaskModel(taskBackendClient.createTask(p.title))
-            })
+    fun create(req: ServerRequest): Mono<ServerResponse> {
+        return ok().json().body(
+                req.bodyToFlux(CreateTaskInbound::class.java).doOnNext { p ->
+                    TaskModel(taskBackendClient.createTask(p.title)).also {
+                        taskService.publishUpdateTask()
+                    }
+                })
+    }
 
     fun updateByTaskId(req: ServerRequest) = ok().json().body(
-            req.bodyToFlux(CreateTaskInbound::class.java).doOnNext {
-                p ->
+            req.bodyToFlux(CreateTaskInbound::class.java).doOnNext { p ->
                 TaskModel(taskBackendClient.updateTask(req.pathVariable("id").toLong(), p.title))
             })
 
     fun deleteByTaskId(req: ServerRequest) = ok().json().body(
-            Mono.just(TaskModel(taskBackendClient.deleteTask(req.pathVariable("id").toLong()))))
+            Mono.just(
+                    TaskModel(taskBackendClient.deleteTask(req.pathVariable("id").toLong()).also {
+                        taskService.publishUpdateTask()
+                    })))
 
     fun finishByTaskId(req: ServerRequest) = ok().json().body(
             Mono.just(TaskModel(taskBackendClient.finishTask(req.pathVariable("id").toLong()))))
+
+    fun fetchTaskCount(req: ServerRequest): Mono<ServerResponse> {
+        return ok().json().bodyToServerSentEvents(
+                taskService.subscribeTaskCount()
+                        .map {
+                            TaskCount(it)
+                        }
+        )
+    }
 }
 
 data class TaskModel(
@@ -78,3 +96,5 @@ data class TaskModel(
 }
 
 data class CreateTaskInbound(val title: String)
+
+data class TaskCount(val count: Int)

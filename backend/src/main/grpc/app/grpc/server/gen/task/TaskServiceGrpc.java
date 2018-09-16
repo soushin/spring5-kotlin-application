@@ -105,6 +105,19 @@ public final class TaskServiceGrpc {
               app.grpc.server.gen.task.TaskOutbound.getDefaultInstance()))
           .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("FinishTaskService"))
           .build();
+  @io.grpc.ExperimentalApi("https://github.com/grpc/grpc-java/issues/1901")
+  public static final io.grpc.MethodDescriptor<com.google.protobuf.Empty,
+      app.grpc.server.gen.task.TaskCountOutbound> METHOD_GET_TASK_COUNT =
+      io.grpc.MethodDescriptor.<com.google.protobuf.Empty, app.grpc.server.gen.task.TaskCountOutbound>newBuilder()
+          .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+          .setFullMethodName(generateFullMethodName(
+              "messages.TaskService", "GetTaskCount"))
+          .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              com.google.protobuf.Empty.getDefaultInstance()))
+          .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+              app.grpc.server.gen.task.TaskCountOutbound.getDefaultInstance()))
+          .setSchemaDescriptor(new TaskServiceMethodDescriptorSupplier("GetTaskCount"))
+          .build();
 
   /**
    * Creates a new async stub that supports all call types for the service
@@ -175,6 +188,13 @@ public final class TaskServiceGrpc {
       asyncUnimplementedUnaryCall(METHOD_FINISH_TASK_SERVICE, responseObserver);
     }
 
+    /**
+     */
+    public void getTaskCount(com.google.protobuf.Empty request,
+        io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskCountOutbound> responseObserver) {
+      asyncUnimplementedUnaryCall(METHOD_GET_TASK_COUNT, responseObserver);
+    }
+
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
@@ -219,6 +239,13 @@ public final class TaskServiceGrpc {
                 app.grpc.server.gen.task.GetTaskInbound,
                 app.grpc.server.gen.task.TaskOutbound>(
                   this, METHODID_FINISH_TASK_SERVICE)))
+          .addMethod(
+            METHOD_GET_TASK_COUNT,
+            asyncUnaryCall(
+              new MethodHandlers<
+                com.google.protobuf.Empty,
+                app.grpc.server.gen.task.TaskCountOutbound>(
+                  this, METHODID_GET_TASK_COUNT)))
           .build();
     }
   }
@@ -288,6 +315,14 @@ public final class TaskServiceGrpc {
       asyncUnaryCall(
           getChannel().newCall(METHOD_FINISH_TASK_SERVICE, getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void getTaskCount(com.google.protobuf.Empty request,
+        io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskCountOutbound> responseObserver) {
+      asyncUnaryCall(
+          getChannel().newCall(METHOD_GET_TASK_COUNT, getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -350,6 +385,13 @@ public final class TaskServiceGrpc {
       return blockingUnaryCall(
           getChannel(), METHOD_FINISH_TASK_SERVICE, getCallOptions(), request);
     }
+
+    /**
+     */
+    public app.grpc.server.gen.task.TaskCountOutbound getTaskCount(com.google.protobuf.Empty request) {
+      return blockingUnaryCall(
+          getChannel(), METHOD_GET_TASK_COUNT, getCallOptions(), request);
+    }
   }
 
   /**
@@ -409,6 +451,14 @@ public final class TaskServiceGrpc {
       return futureUnaryCall(
           getChannel().newCall(METHOD_FINISH_TASK_SERVICE, getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<app.grpc.server.gen.task.TaskCountOutbound> getTaskCount(
+        com.google.protobuf.Empty request) {
+      return futureUnaryCall(
+          getChannel().newCall(METHOD_GET_TASK_COUNT, getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_GET_TASK_SERVICE = 0;
@@ -417,6 +467,7 @@ public final class TaskServiceGrpc {
   private static final int METHODID_UPDATE_TASK_SERVICE = 3;
   private static final int METHODID_DELETE_TASK_SERVICE = 4;
   private static final int METHODID_FINISH_TASK_SERVICE = 5;
+  private static final int METHODID_GET_TASK_COUNT = 6;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -458,6 +509,10 @@ public final class TaskServiceGrpc {
         case METHODID_FINISH_TASK_SERVICE:
           serviceImpl.finishTaskService((app.grpc.server.gen.task.GetTaskInbound) request,
               (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskOutbound>) responseObserver);
+          break;
+        case METHODID_GET_TASK_COUNT:
+          serviceImpl.getTaskCount((com.google.protobuf.Empty) request,
+              (io.grpc.stub.StreamObserver<app.grpc.server.gen.task.TaskCountOutbound>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -526,6 +581,7 @@ public final class TaskServiceGrpc {
               .addMethod(METHOD_UPDATE_TASK_SERVICE)
               .addMethod(METHOD_DELETE_TASK_SERVICE)
               .addMethod(METHOD_FINISH_TASK_SERVICE)
+              .addMethod(METHOD_GET_TASK_COUNT)
               .build();
         }
       }
