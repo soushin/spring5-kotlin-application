@@ -48,4 +48,9 @@ class TaskRepository(val dao: TaskDao) {
         val result = dao.update(entity.copy(finishedAt = now, updatedAt = now))
         return Result.Success(result.entity)
     }
+
+    fun fetchCount(): Result<Int, RepositoryException> {
+        val count = dao.selectCount() ?: return Result.Failure(RepositoryException.NotFoundException("task not found"))
+        return Result.Success(count)
+    }
 }

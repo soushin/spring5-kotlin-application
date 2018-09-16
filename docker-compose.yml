@@ -8,6 +8,7 @@ services:
       - 8080:8080
     depends_on:
       - backend
+      - redis
 
   backend:
     container_name: backend_server
@@ -29,6 +30,12 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+
+  redis:
+    container_name: redis
+    image: redis:latest
+    ports:
+      - 6379:6379
 
   grpc-gateway:
     container_name: grpc-gateway

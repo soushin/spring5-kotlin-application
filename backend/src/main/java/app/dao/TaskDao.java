@@ -32,4 +32,7 @@ public interface TaskDao {
 
     @Select
     List<Task> selectAll();
+
+    @Select
+    Integer selectCount();
 }

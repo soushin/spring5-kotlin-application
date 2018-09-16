@@ -18,4 +18,15 @@ class AppProperties {
             var host = "backend"
         }
     }
+
+    var redis = Redis()
+
+    class Redis {
+        var host: String = "redis"
+        var port: Int = 6379
+        var maxTotal: Int = 15
+        var maxIdle: Int = 10
+        var timeout: Int = 2000
+        var testOnBorrow: Boolean = true
+    }
 }

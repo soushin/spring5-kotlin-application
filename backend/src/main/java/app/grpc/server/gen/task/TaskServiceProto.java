@@ -39,6 +39,11 @@ public final class TaskServiceProto {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_messages_TaskOutbound_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_messages_TaskCountOutbound_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_messages_TaskCountOutbound_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -50,31 +55,35 @@ public final class TaskServiceProto {
     java.lang.String[] descriptorData = {
       "\n\ntask.proto\022\010messages\032\034google/api/annot" +
       "ations.proto\032\037google/protobuf/timestamp." +
-      "proto\032\036google/protobuf/wrappers.proto\"!\n" +
-      "\016GetTaskInbound\022\017\n\007task_id\030\001 \001(\r\"=\n\017Find" +
-      "TaskInbound\022*\n\004page\030\001 \001(\0132\034.google.proto" +
-      "buf.UInt32Value\"\"\n\021CreateTaskInbound\022\r\n\005" +
-      "title\030\001 \001(\t\"3\n\021UpdateTaskInbound\022\017\n\007task" +
-      "_id\030\001 \001(\r\022\r\n\005title\030\002 \001(\t\"\274\001\n\014TaskOutboun" +
-      "d\022\017\n\007task_id\030\001 \001(\r\022\r\n\005title\030\002 \001(\t\022.\n\nfin" +
-      "ishedAt\030\003 \001(\0132\032.google.protobuf.Timestam",
-      "p\022-\n\tcreatedAt\030\004 \001(\0132\032.google.protobuf.T" +
-      "imestamp\022-\n\tupdatedAt\030\005 \001(\0132\032.google.pro" +
-      "tobuf.Timestamp2\200\004\n\013TaskService\022`\n\016GetTa" +
-      "skService\022\030.messages.GetTaskInbound\032\026.me" +
-      "ssages.TaskOutbound\"\034\202\323\344\223\002\026\"\021/grpcgatewa" +
-      "y/task:\001*\022e\n\017FindTaskService\022\031.messages." +
-      "FindTaskInbound\032\026.messages.TaskOutbound\"" +
-      "\035\202\323\344\223\002\027\"\022/grpcgateway/tasks:\001*0\001\022J\n\021Crea" +
-      "teTaskService\022\033.messages.CreateTaskInbou" +
-      "nd\032\026.messages.TaskOutbound\"\000\022J\n\021UpdateTa",
-      "skService\022\033.messages.UpdateTaskInbound\032\026" +
-      ".messages.TaskOutbound\"\000\022G\n\021DeleteTaskSe" +
-      "rvice\022\030.messages.GetTaskInbound\032\026.messag" +
-      "es.TaskOutbound\"\000\022G\n\021FinishTaskService\022\030" +
-      ".messages.GetTaskInbound\032\026.messages.Task" +
-      "Outbound\"\000B4\n\030app.grpc.server.gen.taskB\020" +
-      "TaskServiceProtoP\001Z\004taskb\006proto3"
+      "proto\032\036google/protobuf/wrappers.proto\032\033g" +
+      "oogle/protobuf/empty.proto\"!\n\016GetTaskInb" +
+      "ound\022\017\n\007task_id\030\001 \001(\r\"=\n\017FindTaskInbound" +
+      "\022*\n\004page\030\001 \001(\0132\034.google.protobuf.UInt32V" +
+      "alue\"\"\n\021CreateTaskInbound\022\r\n\005title\030\001 \001(\t" +
+      "\"3\n\021UpdateTaskInbound\022\017\n\007task_id\030\001 \001(\r\022\r" +
+      "\n\005title\030\002 \001(\t\"\274\001\n\014TaskOutbound\022\017\n\007task_i" +
+      "d\030\001 \001(\r\022\r\n\005title\030\002 \001(\t\022.\n\nfinishedAt\030\003 \001",
+      "(\0132\032.google.protobuf.Timestamp\022-\n\tcreate" +
+      "dAt\030\004 \001(\0132\032.google.protobuf.Timestamp\022-\n" +
+      "\tupdatedAt\030\005 \001(\0132\032.google.protobuf.Times" +
+      "tamp\"\"\n\021TaskCountOutbound\022\r\n\005count\030\001 \001(\r" +
+      "2\307\004\n\013TaskService\022`\n\016GetTaskService\022\030.mes" +
+      "sages.GetTaskInbound\032\026.messages.TaskOutb" +
+      "ound\"\034\202\323\344\223\002\026\"\021/grpcgateway/task:\001*\022e\n\017Fi" +
+      "ndTaskService\022\031.messages.FindTaskInbound" +
+      "\032\026.messages.TaskOutbound\"\035\202\323\344\223\002\027\"\022/grpcg" +
+      "ateway/tasks:\001*0\001\022J\n\021CreateTaskService\022\033",
+      ".messages.CreateTaskInbound\032\026.messages.T" +
+      "askOutbound\"\000\022J\n\021UpdateTaskService\022\033.mes" +
+      "sages.UpdateTaskInbound\032\026.messages.TaskO" +
+      "utbound\"\000\022G\n\021DeleteTaskService\022\030.message" +
+      "s.GetTaskInbound\032\026.messages.TaskOutbound" +
+      "\"\000\022G\n\021FinishTaskService\022\030.messages.GetTa" +
+      "skInbound\032\026.messages.TaskOutbound\"\000\022E\n\014G" +
+      "etTaskCount\022\026.google.protobuf.Empty\032\033.me" +
+      "ssages.TaskCountOutbound\"\000B4\n\030app.grpc.s" +
+      "erver.gen.taskB\020TaskServiceProtoP\001Z\004task",
+      "b\006proto3"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -90,6 +99,7 @@ public final class TaskServiceProto {
           com.google.api.AnnotationsProto.getDescriptor(),
           com.google.protobuf.TimestampProto.getDescriptor(),
           com.google.protobuf.WrappersProto.getDescriptor(),
+          com.google.protobuf.EmptyProto.getDescriptor(),
         }, assigner);
     internal_static_messages_GetTaskInbound_descriptor =
       getDescriptor().getMessageTypes().get(0);
@@ -121,6 +131,12 @@ public final class TaskServiceProto {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_messages_TaskOutbound_descriptor,
         new java.lang.String[] { "TaskId", "Title", "FinishedAt", "CreatedAt", "UpdatedAt", });
+    internal_static_messages_TaskCountOutbound_descriptor =
+      getDescriptor().getMessageTypes().get(5);
+    internal_static_messages_TaskCountOutbound_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_messages_TaskCountOutbound_descriptor,
+        new java.lang.String[] { "Count", });
     com.google.protobuf.ExtensionRegistry registry =
         com.google.protobuf.ExtensionRegistry.newInstance();
     registry.add(com.google.api.AnnotationsProto.http);
@@ -129,6 +145,7 @@ public final class TaskServiceProto {
     com.google.api.AnnotationsProto.getDescriptor();
     com.google.protobuf.TimestampProto.getDescriptor();
     com.google.protobuf.WrappersProto.getDescriptor();
+    com.google.protobuf.EmptyProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

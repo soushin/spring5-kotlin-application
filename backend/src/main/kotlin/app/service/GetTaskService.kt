@@ -15,6 +15,7 @@ data class GetTaskCommand(val id: Long)
 
 interface GetTaskService {
     fun getTask(command: GetTaskCommand): Task
+    fun getCount(): Int
 }
 
 @Service("getTaskService")
@@ -24,6 +25,15 @@ class GetTaskServiceImpl(private val taskRepository: TaskRepository) : GetTaskSe
     override fun getTask(command: GetTaskCommand): Task {
         return taskRepository.findOneById(command.id).fold({
             task -> task
+        }, {
+            error -> throw handle(error)
+        })
+    }
+
+    @Transactional(readOnly = true)
+    override fun getCount(): Int {
+        return taskRepository.fetchCount().fold({
+            it
         }, {
             error -> throw handle(error)
         })

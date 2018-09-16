@@ -2,12 +2,7 @@ package app.grpc.server
 
 import app.entity.Task
 import app.grpc.handler.context.GRpcLogContextHandler
-import app.grpc.server.gen.task.CreateTaskInbound
-import app.grpc.server.gen.task.FindTaskInbound
-import app.grpc.server.gen.task.GetTaskInbound
-import app.grpc.server.gen.task.TaskOutbound
-import app.grpc.server.gen.task.TaskServiceGrpc
-import app.grpc.server.gen.task.UpdateTaskInbound
+import app.grpc.server.gen.task.*
 import app.grpc.validator.GRpcInboundValidator
 import app.service.CreateTaskCommand
 import app.service.DelegateTaskService
@@ -16,6 +11,7 @@ import app.service.FindTaskCommand
 import app.service.FinishTaskCommand
 import app.service.GetTaskCommand
 import app.service.UpdateTaskCommand
+import com.google.protobuf.Empty
 import com.google.protobuf.Timestamp
 import io.grpc.stub.StreamObserver
 import java.time.LocalDateTime
@@ -117,5 +113,16 @@ class TaskBackendServer(private val delegateTaskService: DelegateTaskService) : 
         val msg = getOutbound(task)
         responseObserver?.onNext(msg)
         responseObserver?.onCompleted()
+    }
+
+    override fun getTaskCount(request: Empty?, responseObserver: StreamObserver<TaskCountOutbound>?) {
+        responseObserver?.run {
+            TaskCountOutbound.newBuilder()
+                    .setCount(delegateTaskService.getCount())
+                    .build().let {
+                        onNext(it)
+                        onCompleted()
+                    }
+        }
     }
 }

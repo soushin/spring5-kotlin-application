@@ -58,6 +58,15 @@ $ curl -XGET http://localhost:8080/api/tasks | jq
   ]
 ```
 
+**Subscribe task count**
+
+```
+$ curl -XGET -H 'Content-Type:text/event-stream' http://localhost:8080/api/task-count
+data:{"count":3}
+
+data:{"count":4}
+```
+
 ## Running the applications
 
 Running docker containers.

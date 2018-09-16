@@ -1,18 +1,10 @@
 package app.web.routes
 
-import app.ErrorItem
-import app.SystemException
-import app.json
 import app.web.handler.TaskHandler
-import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType.APPLICATION_JSON
-import org.springframework.stereotype.Component
+import org.springframework.http.MediaType.*
 import org.springframework.web.reactive.function.server.*
-import org.springframework.web.reactive.function.server.ServerResponse.status
-import reactor.core.publisher.Mono
 
 /**
  *
@@ -23,16 +15,17 @@ class TaskRoutes(private val taskHandler: TaskHandler) {
 
     @Bean
     fun taskRouter() = router {
-        (accept(APPLICATION_JSON) and "/api").nest {
-            "/task".nest {
-                POST("/", taskHandler::create)
-                GET("/{id}", taskHandler::fetchByTaskId)
-                PUT("/{id}", taskHandler::updateByTaskId)
-                DELETE("/{id}", taskHandler::deleteByTaskId)
-                PUT("/{id}/finish", taskHandler::finishByTaskId)
+        "/api".nest {
+            accept(APPLICATION_JSON).nest {
+                POST("/task", taskHandler::create)
+                GET("/task/{id}", taskHandler::fetchByTaskId)
+                PUT("/task/{id}", taskHandler::updateByTaskId)
+                DELETE("/task/{id}", taskHandler::deleteByTaskId)
+                PUT("/task/{id}/finish", taskHandler::finishByTaskId)
+                GET("/tasks", taskHandler::fetchAll)
             }
-            "/tasks".nest {
-                GET("/", taskHandler::fetchAll)
+            accept(TEXT_EVENT_STREAM).nest {
+                GET("/task-count", taskHandler::fetchTaskCount)
             }
         }
     }
