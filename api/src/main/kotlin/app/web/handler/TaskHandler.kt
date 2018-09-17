@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.reactive.function.server.ServerRequest
 import org.springframework.web.reactive.function.server.ServerResponse
 import org.springframework.web.reactive.function.server.body
-import org.springframework.web.reactive.function.server.ServerResponse.*
+import org.springframework.web.reactive.function.server.ServerResponse.ok
 import org.springframework.web.reactive.function.server.bodyToServerSentEvents
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
@@ -39,7 +39,7 @@ class TaskHandler(private val taskBackendClient: TaskBackendClient,
 
     fun create(req: ServerRequest): Mono<ServerResponse> {
         return ok().json().body(
-                req.bodyToFlux(CreateTaskInbound::class.java).doOnNext { p ->
+                req.bodyToMono(CreateTaskInbound::class.java).map { p ->
                     TaskModel(taskBackendClient.createTask(p.title)).also {
                         taskService.publishUpdateTask()
                     }
@@ -47,7 +47,7 @@ class TaskHandler(private val taskBackendClient: TaskBackendClient,
     }
 
     fun updateByTaskId(req: ServerRequest) = ok().json().body(
-            req.bodyToFlux(CreateTaskInbound::class.java).doOnNext { p ->
+            req.bodyToMono(CreateTaskInbound::class.java).map { p ->
                 TaskModel(taskBackendClient.updateTask(req.pathVariable("id").toLong(), p.title))
             })
 
